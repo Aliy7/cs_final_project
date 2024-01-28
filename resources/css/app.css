@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dashboard-content {
+    position: absolute;
+    left: 200px; /* This should match the width of your sidebar */
+    top: 60px; /* This should match the height of your navbar */
+    right: 0;
+    bottom: 0;
+    padding: 1rem;
+    padding-top: 20px; /* At least the height of the navbar */
+    padding-right: 0;
+    margin-right: 0;
+    /* padding-right: 0;
+    margin-right: 0; */
+    /* background: white; */
+    z-index: 1; /* Lower than the navbar to ensure it goes underneath when scrolling */
+    /* Rest of your styles... */
+}
+
+.logo-text {
+    font-family: 'Playfair Display', serif;  /* Replace with your chosen font */
+    font-size: 48px;                      /* Adjust size as needed */
+    text-transform: uppercase;            /* Optional for stylistic effect */
+    letter-spacing: 2px;                  /* Adjust spacing for balance */
+    color: #333;                          /* Base text color */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+    background: linear-gradient(to right, #13c974, #e5e5e5c5); /* Optional gradient */
+    word-break: keep-all;                 /* Prevent awkward line breaks */
+  }
+  
+  .main-container {
+    /* display: flex;  */
+    flex-direction: row; 
+    min-height: 100vh; /* Full height of the viewport */
+    padding-top: 60px; /* Height of the navbar, adjust as necessary */
+}
+#logo-sidebar {
+    position: fixed;
+    top: 30px; /* height of the navbar */
+    left: 0;
+    width: 240px; /* width of your sidebar */
+    bottom: 0;
+    overflow-y: auto; /* allows the sidebar to scroll independently */
+    /* ... other styles ... */
+}
+
+footer {
+  
+     height: 60px; /* Example height, adjust this to your footer's actual height */
+        /* ... other styles ... */
+   
+    padding: 1rem;
+    background: #6c5ce7; /* Example background color */
+    color: rgb(114, 19, 122); /* Example text color */
+}
+* {
+    box-sizing: border-box;
+}
