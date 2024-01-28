@@ -16,7 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/welcome', 'welcome');
+Route::view('/', 'welcome');
+
+Route::get('/welcome', function(){
+    return view('welcome');
+})->name('welcome');
 
 Route::get('/dashboard', Dashboard::class)
     ->middleware(['auth'])
