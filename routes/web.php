@@ -4,6 +4,8 @@ namespace App\Livewire;
 use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Profile\ProfileComponent;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,5 +39,12 @@ Route::view('profile', 'profile')
         session()->regenerateToken();
         return redirect('/welcome'); // Or wherever you wish to redirect after logout
     })->name('logout');
+ 
+    Route::get('profile', ProfileComponent::class)->middleware(['auth'])->name('profile.profile-updating');    
+    Route::middleware('auth')->group(function () {
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/profile/{id}', [ProfileController::class, 'showProfile'])->name('profile.showProfile');
+    });
     
 require __DIR__.'/auth.php';
