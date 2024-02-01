@@ -4,6 +4,8 @@
     {{-- <h1> Food listing coming soon ..keep an eye out </h1>
 </div> --}} 
 <div>
+
+    
     <form wire:submit.prevent="store" class="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow">
         <h2 class="text-2xl font-semibold text-center mb-6">Create Food Listing</h2>
 

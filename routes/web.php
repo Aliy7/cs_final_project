@@ -33,7 +33,9 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::get('/foodlisting', CreateFoodListing::class)->name('foodlisting'); 
+Route::get('/foodlisting', CreateFoodListing::class)
+    ->middleware(['auth']) // Make sure the user is authenticated
+    ->name('foodlisting');
 
     Route::post('/logout', function () {
         Auth::logout();
