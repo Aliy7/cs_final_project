@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('ingredients');
             $table->string('quantity');
-            $table->string('allergenInfo');
+            $table->string('allergen');
             $table->string('description');
             $table->string('photo_url');
             $table->boolean('status')->default(true);

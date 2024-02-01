@@ -8,4 +8,5 @@ interface View extends Renderable
 {
   /** @return static */
   public function layout();
+  public function url($filename);
 }

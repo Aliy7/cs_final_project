@@ -29,7 +29,7 @@ class FoodListingFactory extends Factory
             'name' => fake()->word,
             'ingredients' => implode(', ', fake()->randomElements($ingredients, rand(1, 3))), 
             'quantity' => fake()->randomDigitNotNull,
-            'allergenInfo' => fake()->randomElement($allergens),
+            'allergen' => fake()->randomElement($allergens),
         
             'description' => fake()->sentence,
             'photo_url' => fake()->imageUrl(640, 480, 'food', true),

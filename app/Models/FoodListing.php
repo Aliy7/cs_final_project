@@ -19,9 +19,9 @@ class FoodListing extends Model
         'name',
         'ingredients',
         'quantity',
-        'allergenInfo',
+        'allergen',
         'description',
-        'photoUrl',
+        'photo_url',
         'status',
     ];
     protected $guarded = [
@@ -40,5 +40,10 @@ class FoodListing extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

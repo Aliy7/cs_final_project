@@ -7,7 +7,7 @@
     <form wire:submit.prevent="store" class="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow">
         <h2 class="text-2xl font-semibold text-center mb-6">Create Food Listing</h2>
 
-        {{-- Name Input --}}
+        Name Input
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
             <input wire:model="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Food Name">
@@ -35,8 +35,8 @@
         {{-- Allergen Info Input --}}
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Allergen Info</label>
-            <input wire:model="allergenInfo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Allergen Info">
-            @error('allergenInfo') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            <input wire:model="allergen" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Allergen Info">
+            @error('allergen') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
 
         {{-- Description Input --}}
@@ -89,7 +89,10 @@
 
         {{-- Submit Button --}}
         <div class="flex justify-center mt-6">
+            {{-- <x-primary-button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">{{ __('Create L') }}</x-primary-button> --}}
+
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create Listing</button>
+
         </div>
     </form>
 </div>

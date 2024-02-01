@@ -15,6 +15,7 @@
                             {{ __("You're logged in!") }}
 
                             @livewire('foodlisting.create-food-listing')
+                            @livewire('foodlisting.show-food-listing')
 
                         </div>
                     </div>
