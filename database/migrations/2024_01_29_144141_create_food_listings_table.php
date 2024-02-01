@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('food_listings', function (Blueprint $table) {
             $table->id();
-            $table->text('bio')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->date('date_of_birth')->nullable();
-            $table->string('image_url')->nullable();
-
+            $table->string('name');
+            $table->string('ingredients');
+            $table->string('quantity');
+            $table->string('allergenInfo');
+            $table->string('description');
+            $table->string('photo_url');
+            $table->boolean('status')->default(true);
             $table->timestamps();
+
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade');
+
         });
     }
 
@@ -28,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('food_listings');
     }
 };

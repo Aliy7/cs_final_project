@@ -2,7 +2,7 @@
     <section class="profile-content">
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-grey-700 dark:bg-gray-500 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-white dark:bg-grey-700 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <header class="mb-4">
 
@@ -113,11 +113,9 @@
 
                                     <x-primary-button wire:click="save">{{ __('Update Profile') }}</x-primary-button>
                                 </div>
-
-
                             </form>
                         @else
-                            <div class="bg-lime-400 text-white rounded-lg shadow px-6 py-4 max-w-3xl mx-auto">
+                            <div class="bg-emerald-300 text-white rounded-lg shadow px-6 py-4 max-w-3xl mx-auto">
                                 <div class="flex justify-between items-center">
                                     <div class="flex-grow">
                                     </div>
@@ -136,11 +134,16 @@
                                 <div class="mb-3">Email: {{ $email }}</div>
 
                             </div>
+                            <div>
                             <div class="flex items-center justify-end">
-                                <h1 class="font-bold alert-danger form-inline">Click here to edit profile </h1>
                                 <x-primary-button wire:click="isEditingNow"
                                     class="btn-edit">{{ __(' Edit profile') }}</x-primary-button>
+                                {{-- <h1 class="font-bold alert-danger form-inline">Click here to edit profile </h1> --}}
+                                <div>
+                                
+                                </div>
                             </div>
+                           at
                         @endif
                     </div>
                 </div>
@@ -167,15 +170,12 @@
                 <div class="max-w-xl">
                     <livewire:profile.update-password-form />
                 </div>
-
-
+            </div>
                 <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                     <div class="max-w-xl">
                         <livewire:profile.delete-user-form />
                     </div>
                 </div>
-
             </div>
-
 </section>
 

@@ -18,7 +18,7 @@
 }
 .profile-content {
     position: absolute;
-    top: 40px; /* Height of the navbar */
+    top: 60px; /* Height of the navbar */
     left: 240px; /* Width of the sidebar */
     right: 0;
     bottom: 0;

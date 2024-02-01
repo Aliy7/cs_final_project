@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Database\Factories\FoodListingFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,5 +17,7 @@ class DatabaseSeeder extends Seeder
        $this->call(RolePermissionSeeder::class);
        $this->call(UserSeeder::class);
        $this->call(ProfileSeeder::class);
+       $this->call(FoodListingSeeder::class);
+       $this->call(CategorySeeder::class);
     }
 }

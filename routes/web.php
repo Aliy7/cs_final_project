@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Profile\ProfileComponent;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\FoodListing\CreateFoodListing;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
+Route::get('/foodlisting', CreateFoodListing::class)->name('foodlisting'); 
 
     Route::post('/logout', function () {
         Auth::logout();

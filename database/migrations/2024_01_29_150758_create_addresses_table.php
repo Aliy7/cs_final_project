@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
-            $table->id();
-            $table->text('bio')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->date('date_of_birth')->nullable();
-            $table->string('image_url')->nullable();
-
+        Schema::create('addresses', function (Blueprint $table) {
+            $table->id(); 
+            $table->string('street_name');
+            $table->string('city');
+            $table->string('state');
+            $table->string('postcode');
+            $table->string('country');
             $table->timestamps();
+
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+
         });
     }
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('addresses');
     }
 };
