@@ -9,10 +9,12 @@
             {{-- </x-slot> --}}
         
             <div class="py-9">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-12">
+                <div class="max-w-10xl mx-auto sm:px-6 lg:px-12">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
-                            {{ __("You're logged in!") }}
+                            {{-- {{ __("You're logged in!") }} --}}
+                            {{-- @livewire('geo-code-post-code.location') --}}
+                            @livewire('location.location-search')
 
                             @livewire('foodlisting.create-food-listing')
                             @livewire('foodlisting.show-food-listing')

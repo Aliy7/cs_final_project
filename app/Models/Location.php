@@ -10,7 +10,7 @@ class Location extends Model
     use HasFactory;
 
     protected $fillable = [
-        'postcode','city', 'country', 'state'
+        'searchName','latitude', '', 'longitude'
  
     ];
 

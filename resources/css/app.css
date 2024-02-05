@@ -4,36 +4,39 @@
 
 .dashboard-content {
     position: absolute;
-    left: 200px; /* This should match the width of your sidebar */
-    top: 60px; /* This should match the height of your navbar */
-    right: 0;
-    bottom: 0;
-    padding: 1rem;
-    padding-top: 0px; 
-    padding-right: 0;
-    margin-right: 0;
-   
+    top: 60px; 
+    left: 200px; 
+    right: 0; 
+    bottom: 0; 
+    padding: 1rem; 
     z-index: 1; 
-    
+    overflow-y: auto; 
+    box-sizing: border-box; 
 }
 
-.food-creation-content {
-    position: absolute;
-    left: 200px; /* This should match the width of your sidebar */
-    top: 60px; /* This should match the height of your navbar */
-    right: 0;
-    bottom: 0;
-    padding: 1rem;
-    padding-top: 20px; 
-    padding-right: 0;
-    margin-right: 0;
-   
-    z-index: 1; 
-    
-}
+
+
+
 .profile-content {
     position: absolute;
     top: 60px; /* Height of the navbar */
+    left: 240px; /* Width of the sidebar */
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: 10; /* Below the navbar and sidebar */
+  
+    padding: 1rem; /* Padding inside the content for aesthetics */
+   
+}
+#address-map-container {
+    border: 1px solid red; /* Temporarily added to ensure visibility */
+}
+
+
+.map-content {
+    position: absolute;
+    top: 120px; /* Height of the navbar */
     left: 240px; /* Width of the sidebar */
     right: 0;
     bottom: 0;

@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->string('postcode');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
+            $table->string('searchName');
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
             $table->timestamps();
             // $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 

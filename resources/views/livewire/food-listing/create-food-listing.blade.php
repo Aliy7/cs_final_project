@@ -1,8 +1,3 @@
-{{-- <div>
-    {{-- Nothing in the world is as soft and yielding as water. --}}
-
-    {{-- <h1> Food listing coming soon ..keep an eye out </h1>
-</div> --}} 
 <div>
 
     
