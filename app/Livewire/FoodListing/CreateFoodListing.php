@@ -61,9 +61,8 @@ public function store()
         $foodListing->allergen = $this->allergen;
         $foodListing->description = $this->description;
         $foodListing->status = $this->status;
-        // Directly assigning guarded properties:
         $foodListing->category_id = $this->category_id;
-        $foodListing->user_id = Auth::id(); // Direct assignment
+        $foodListing->user_id = Auth::id(); 
 
        
         if (!empty($this->images)) {

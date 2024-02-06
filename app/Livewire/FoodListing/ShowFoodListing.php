@@ -11,6 +11,9 @@ class ShowFoodListing extends Component
     use WithPagination;
 
     public $foodListing;
+
+    protected $listeners = ['foodListingCreated' => '$refresh'];
+
     public function render()
     {
         // Directly fetch the listings in the render method

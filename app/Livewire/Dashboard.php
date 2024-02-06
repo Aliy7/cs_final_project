@@ -7,7 +7,7 @@ use Livewire\Component;
 class Dashboard extends Component
 {
 
-    protected $listeners = ['food-listing-created' => '$refresh'];
+    // protected $listeners = ['foodListingCreated' => '$refresh'];
 
     public function render()
     {
