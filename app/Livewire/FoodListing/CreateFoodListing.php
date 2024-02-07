@@ -2,6 +2,7 @@
 
 namespace App\Livewire\FoodListing;
 
+use App\Livewire\App\AppLayout;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\FoodListing;
@@ -17,6 +18,7 @@ class CreateFoodListing extends Component
     use WithFileUploads;
 
     public $name, $ingredients, $quantity, $allergen, $description, $status, $category_id;
+    public $latitude, $longitude, $searchName;
     public $images = [];
     public $imageUrls = [];
     public $categories;
@@ -30,11 +32,12 @@ class CreateFoodListing extends Component
         'status' => 'required|boolean',
         'category_id' => 'required|exists:categories,id',
         'images.*' => 'image|max:1024',
+        
     ];
 
     public function mount()
     {
-        $this->categories = Category::all(); 
+        $this->categories = Category::all();
     }
 
     public function uploadImage($image)
@@ -43,52 +46,51 @@ class CreateFoodListing extends Component
         $image->storeAs('public', $fileName);
         return $fileName;
     }
-public function store()
-{
-    $this->validate();
+    
+    public function store()
+    {
+        $this->validate();
 
-    if (!Auth::check()) {
-        session()->flash('error', 'You must be logged in to create a listing.');
-        // Redirecting in Livewire component, adapted for Livewire:
-        return redirect()->route('login'); // Note: Adapt based on Livewire's handling
+        if (!Auth::check()) {
+            session()->flash('error', 'You must be logged in to create a listing.');
+            // Redirecting in Livewire component, adapted for Livewire:
+            return redirect()->route('login'); // Note: Adapt based on Livewire's handling
+        }
+
+        DB::transaction(function () {
+            $foodListing = new FoodListing();
+            $foodListing->name = $this->name;
+            $foodListing->ingredients = $this->ingredients;
+            $foodListing->quantity = $this->quantity;
+            $foodListing->allergen = $this->allergen;
+            $foodListing->description = $this->description;
+            $foodListing->status = $this->status;
+            $foodListing->category_id = $this->category_id;
+            $foodListing->user_id = Auth::id();
+
+
+            if (!empty($this->images)) {
+                $imagePaths = [];
+                foreach ($this->images as $image) {
+                    $fileName = $this->uploadImage($image);
+                    array_push($imagePaths, $fileName);
+                }
+                $foodListing->photo_url = json_encode($imagePaths);
+            }
+            $foodListing->save();
+            $this->dispatch('foodListingCreated');
+        });
+
+        session()->flash('success', 'Food listing created successfully.');
+        $this->reset(['name', 'ingredients', 'quantity', 'allergen', 'description', 'status', 'category_id', 'images']);
     }
-
-    DB::transaction(function () {
-        $foodListing = new FoodListing();
-        $foodListing->name = $this->name;
-        $foodListing->ingredients = $this->ingredients;
-        $foodListing->quantity = $this->quantity;
-        $foodListing->allergen = $this->allergen;
-        $foodListing->description = $this->description;
-        $foodListing->status = $this->status;
-        $foodListing->category_id = $this->category_id;
-        $foodListing->user_id = Auth::id(); 
-
-       
-        if (!empty($this->images)) {
-                        $imagePaths = [];
-                        foreach ($this->images as $image) {
-                            $fileName = $this->uploadImage($image);
-                            array_push($imagePaths, $fileName);
-                        }
-                        $foodListing->photo_url = json_encode($imagePaths);
-                    }
-        $foodListing->save();
-    });
-
-    session()->flash('success', 'Food listing created successfully.');
-    $this->reset(['name', 'ingredients', 'quantity', 'allergen', 'description', 'status', 'category_id', 'images']);
-    $this->dispatch('foodListingCreated'); // Adapt this event name as needed
-}
     public function render()
     {
         return view('livewire.food-listing.create-food-listing')
-        ->layout('layouts.app');
-    
-}
-public function testMethod()
-{
-    dd('Method called');
-}
-
+            ->layout('livewire.app.app-layout');
+    }
+    public function testMethod()
+    {
+        dd('Method called');
+    }
 }

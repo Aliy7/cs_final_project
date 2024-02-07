@@ -12,23 +12,8 @@ class LocationSearch extends Component
     public $latitude = '';
     public $longitude = '';
 
-    // public function saveLocation()
-    // {
-    //     $this->validate([
-    //         'searchName' => 'required',
-    //         'latitude' => 'required',
-    //         'longitude' => 'required',
-    //     ]);
-
-    //     Location::create([
-    //         'searchName' => $this->searchAddress,
-    //         'latitude' => $this->latitude,
-    //         'longitude' => $this->longitude,
-    //     ]);
-
-    //     $this->reset(['searchName', 'latitude', 'longitude']);
-    // }
     public $food_listing_id;
+    protected $listeners = ['setLocationCoordinates' => '$setLocationCoordinates'];
 
     public function saveLocation()
     {
@@ -58,7 +43,6 @@ class LocationSearch extends Component
     ]);
 }
 
-protected $listeners = ['setLocationCoordinates'];
 
 public function setLocationCoordinates($latitude, $longitude)
 {
@@ -73,7 +57,7 @@ public function updateLocation($key, $lat, $lng)
     public function render()
     {
         return view('livewire.location.location-search')
-        ->layout('layouts.app');
+        ->layout('livewire.app.app-layout');
 
     }
 }

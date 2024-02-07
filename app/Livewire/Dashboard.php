@@ -7,11 +7,11 @@ use Livewire\Component;
 class Dashboard extends Component
 {
 
-    // protected $listeners = ['foodListingCreated' => '$refresh'];
+  
 
     public function render()
     {
         return view('livewire.layout.dashboard')
-        ->layout('layouts.app');
+        ->layout('livewire.app.app-layout');
     }
 }

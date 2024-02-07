@@ -14,11 +14,11 @@ class Location extends Model
  
     ];
 
-    protected $guarded = [
-        'food_id'
-    ];
+    // protected $guarded = [
+    //     'food_id'
+    // ];
 
-    public function foodListing(){
-        return $this->belongsTo(FoodListing::class);
-    }
+    // public function foodListing(){
+    //     return $this->belongsTo(FoodListing::class);
+    // }
 }

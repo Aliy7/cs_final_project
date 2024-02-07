@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
             // $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
-            $table->foreignId('food_listing_id')->constrained('food_listings')->onUpdate('cascade')->onDelete('cascade');
+            // $table->foreignId('food_listing_id')->constrained('food_listings')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

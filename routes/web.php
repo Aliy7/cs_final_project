@@ -9,6 +9,7 @@ use App\Livewire\GeocodePostCode\Location;
 use App\Livewire\Profile\ProfileComponent;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GoogleMapController;
+use App\Http\Controllers\LocationController;
 use App\Livewire\FoodListing\CreateFoodListing;
 
 /*
@@ -70,5 +71,7 @@ Route::get('/foodlisting', CreateFoodListing::class)
 Route::get('/google-map', function () {
     return view('googlemaps');
 })->name('google-map');
+
+Route::post('/save-location', [LocationController::class, 'saveLocation'])->name('saveLocation');
 
 require __DIR__.'/auth.php';
