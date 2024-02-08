@@ -16,9 +16,10 @@
                                 </div>
                                 @if ($listing->photo_url)
                                     @php $imageUrls = json_decode($listing->photo_url, true); @endphp
-                                    @if(is_array($imageUrls) && count($imageUrls) > 0)
+                                    @if (is_array($imageUrls) && count($imageUrls) > 0)
                                         <!-- Adjusted image size for a larger display -->
-                                        <img src="{{ asset('storage/' . $imageUrls[0]) }}" alt="Food Image" class="rounded-lg mb-4" style="width: auto; height: 200px;">
+                                        <img src="{{ asset('storage/' . $imageUrls[0]) }}" alt="Food Image"
+                                            class="rounded-lg mb-4" style="width: auto; height: 200px;">
                                     @else
                                         <div>No images available.</div>
                                     @endif
@@ -30,6 +31,28 @@
                                 <div>Quantity: {{ $listing->quantity }}</div>
                                 <div>Allergen: {{ $listing->allergen }}</div>
                                 <div>Status: {{ $listing->status ? 'Available' : 'Unavailable' }}</div>
+                                <div x-data="{ open: false }">
+                                    <button @click="open = !open" class="focus:outline-none">
+                                        <img src="{{ asset('storage/logo/icons8-location (1).gif') }}" alt="Show Location" />
+                                    </button>
+                                                                        <div x-show="open" x-cloak>
+                                        @if ($listing->location && $listing->location->latitude && $listing->location->longitude)
+
+                                            <div id="map-{{ $listing->id }}" 
+                                                 x-init-map="open" 
+                                                 data-listing-id="{{ $listing->id }}"
+                                                 data-latitude="{{ $listing->location->latitude }}"
+                                                 data-longitude="{{ $listing->location->longitude }}"
+                                                 style="height: 100px; width: 200%;">
+                                                <!-- The map will be initialized here -->
+                                            </div>
+                                        @else
+                                            <div>No location available.</div>
+                                        @endif
+                                    </div>
+                                </div>
+
+
                             </div>
                         @endforeach
                     </div>
@@ -41,3 +64,43 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+function initialize() {
+    // This function will be called as the callback when the Google Maps API loads.
+    initMap();
+    loadGoogleMapsAPI();
+}
+
+function initMap() {
+    document.querySelectorAll('[id^="map-"]').forEach(function(mapContainer) {
+        const latitude = parseFloat(mapContainer.dataset.latitude);
+        const longitude = parseFloat(mapContainer.dataset.longitude);
+        // Only initialize the map if latitude and longitude are available
+        if (latitude && longitude) {
+            const map = new google.maps.Map(mapContainer, {
+                center: { lat: latitude, lng: longitude },
+                zoom: 15
+            });
+            new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map: map
+            });
+        }
+    });
+}
+
+
+
+document.addEventListener('alpine:init', () => {
+    Alpine.directive('init-map', (el, { expression }, { evaluate }) => {
+        Alpine.effect(() => {
+            if (evaluate(expression)) {
+                initMap();
+            }
+        });
+    });
+});
+    </script>

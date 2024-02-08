@@ -16,12 +16,16 @@
     <!-- Scripts -->
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="//unpkg.com/alpinejs" defer></script>
+
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
         {{-- <livewire:layout.navigation /> --}}
 
         @include('livewire.layout.sidebar')
+
+        
 
         
         <!-- Page Heading -->
@@ -48,8 +52,10 @@
 
       {{-- <script type="text/javascript" src="/js/mapInput.js" > </script> --}}
       
-     {{-- <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6T45Ph2qni_P8Hb_p1Y8E_J9SeGym2T4&libraries=places&callback=initialize" async defer></script> --}}
      <script type="text/javascript" src="/js/mapInput.js" > </script>
+
+
 </body>
 
 </html>
+

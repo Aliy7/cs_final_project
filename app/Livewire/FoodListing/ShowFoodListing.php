@@ -37,7 +37,7 @@ class ShowFoodListing extends Component
 
     public function getFoodListings()
     {
-        return $foodlistings = FoodListing::with('user')
+        return $foodlistings = FoodListing::with('user', 'location')
                           ->orderBy('created_at', 'desc')
                           ->paginate(4);
                           

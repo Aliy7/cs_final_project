@@ -14,15 +14,20 @@ if (document.readyState === 'loading') {
     
     loadGoogleMapsAPI();
 }
+
+function initializeMaps() {
+  if (document.getElementsByClassName("map-input").length > 0) {
+    initAutocomplete();
+  }
+
+  if (document.querySelectorAll('[id^="view-map-"]').length > 0) {
+    initViewMaps();
+  }
+}
+
 function initialize() {
 
-    // $('form').on('keyup keypress', function(e) {
-    //     var keyCode = e.keyCode || e.which;
-    //     if (keyCode === 13) {
-    //         e.preventDefault();
-    //         return false;
-    //     }
-    // });
+  
     $(document).ready(function() {
         $('form').on('keyup keypress', function(e) {
           var keyCode = e.keyCode || e.which;
@@ -127,3 +132,31 @@ function setLocationCoordinates(key, lat, lng, searchName) {
 
 
 document.addEventListener('DOMContentLoaded', loadGoogleMapsAPI);
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Listen for Livewire events
+        Livewire.on('load', () => {
+            const savedPosition = localStorage.getItem('scrollPosition');
+            if (savedPosition) {
+                setTimeout(() => {
+                    window.scrollTo(0, parseInt(savedPosition));
+                    localStorage.removeItem('scrollPosition'); // Optional: Clear after use
+                }, 0); // You might need to adjust the timeout duration depending on when your content loads
+            }
+        });
+    
+        Livewire.on('beforeunload', () => {
+            localStorage.setItem('scrollPosition', window.scrollY || document.documentElement.scrollTop);
+        });
+    });
+    
+    // Disable the browser's automatic scroll restoration
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    
+    
+        

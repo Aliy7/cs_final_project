@@ -83,9 +83,10 @@
             </div>
         </div>
                    {{-- Location Search Integration --}}
-  =
-        <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
-            Testing location Search
+  
+                   
+        <div class="bg-blue-100 border border-blue-400 font-bold text-sky-400 px-4 py-3 rounded relative" role="alert">
+            Add Pick Location
         </div>
         <div class="mb-4">
             <label for="address-input" class="block text-gray-700 text-sm font-bold mb-2">Search Address:</label>
