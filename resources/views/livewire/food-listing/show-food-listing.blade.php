@@ -38,7 +38,7 @@
                                                                         <div x-show="open" x-cloak>
                                         @if ($listing->location && $listing->location->latitude && $listing->location->longitude)
 
-                                            <div id="map-{{ $listing->id }}" 
+                                            <div id="map-{{ $listing->id }}"  class="map-container w-full h-56 mb-4"
                                                  x-init-map="open" 
                                                  data-listing-id="{{ $listing->id }}"
                                                  data-latitude="{{ $listing->location->latitude }}"

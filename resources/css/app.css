@@ -33,6 +33,10 @@
     border: 1px solid red; /* Temporarily added to ensure visibility */
 }
 
+.map-container {
+    border: 1px solid red; /* Temporarily added to ensure visibility */
+    /* Add other styles as needed */
+}
 
 .map-content {
     position: absolute;
