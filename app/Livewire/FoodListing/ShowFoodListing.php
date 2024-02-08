@@ -23,6 +23,11 @@ class ShowFoodListing extends Component
     public function updateFoodList($foodListing = null){
     // dd('foodlistings');
     }
+
+    // #[On('locationSaved')]
+    // public function updateLocation(){
+
+    // }
     public function render()
     {
         return view('livewire.food-listing.show-food-listing', [

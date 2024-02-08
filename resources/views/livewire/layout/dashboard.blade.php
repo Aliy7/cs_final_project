@@ -13,11 +13,22 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             {{-- {{ __("You're logged in!") }} --}}
-                            {{-- @livewire('geo-code-post-code.location') --}}
-                            @livewire('location.location-search')
+                            {{-- @livewire('geo-code-post-code.location')  --}}
+                            {{-- @livewire('location.location-search') --}}
 
-                            @livewire('foodlisting.create-food-listing')
-                            @livewire('foodlisting.show-food-listing')
+                            {{-- @livewire('foodlisting.create-food-listing')
+
+                            @livewire('foodlisting.show-food-listing')  --}}
+
+<!-- First Block for Creating Food Listing -->
+<div class="block create-food-listing">
+    @livewire('foodlisting.create-food-listing')
+</div>
+
+<!-- Second Block for Showing Food Listing -->
+<div class="block show-food-listing">
+    @livewire('foodlisting.show-food-listing')
+</div> 
 
                         </div>
                     </div>

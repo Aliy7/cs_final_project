@@ -10,15 +10,15 @@ class Location extends Model
     use HasFactory;
 
     protected $fillable = [
-        'searchName','latitude', '', 'longitude'
+        'searchName','latitude', '', 'longitude',  'food_listing_id'
  
     ];
 
-    // protected $guarded = [
-    //     'food_id'
-    // ];
+    protected $guarded = [
+        'food_listing_id'
+    ];
 
-    // public function foodListing(){
-    //     return $this->belongsTo(FoodListing::class);
-    // }
+    public function foodListing(){
+        return $this->belongsTo(FoodListing::class);
+    }
 }

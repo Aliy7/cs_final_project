@@ -91,4 +91,19 @@ footer {
     
 }
 
+.block {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.create-food-listing {
+    background-color: #f9f9f9;
+}
+
+.show-food-listing {
+    background-color: #e9e9e9;
+}
+
 

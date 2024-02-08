@@ -28,10 +28,11 @@ class FoodListing extends Model
         'user_id', 
         'category_id'
     ];
-    // public function locations()
-    // {
-    //     return $this->hasMany(Location::class);
-    // }
+    public function location()
+    {
+        return $this->hasOne(Location::class, 'food_listing_id', 'id');
+    }
+
     public function ratings()
     {
         return $this->hasMany(Rating::class);

@@ -2,14 +2,15 @@
 
 namespace App\Livewire\FoodListing;
 
-use App\Livewire\App\AppLayout;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\FoodListing;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
+use App\Livewire\App\AppLayout;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class CreateFoodListing extends Component
@@ -18,11 +19,14 @@ class CreateFoodListing extends Component
     use WithFileUploads;
 
     public $name, $ingredients, $quantity, $allergen, $description, $status, $category_id;
-    public $latitude, $longitude, $searchName;
+    public $latitude, $longitude, $searchName, $food_listing_id;
     public $images = [];
     public $imageUrls = [];
     public $categories;
 
+    protected $listeners = [
+        "updateLocationCoordinates" => 'setLocation'
+    ];
     protected $rules = [
         'name' => 'required|string|max:200',
         'ingredients' => 'required|string',
@@ -53,7 +57,6 @@ class CreateFoodListing extends Component
 
         if (!Auth::check()) {
             session()->flash('error', 'You must be logged in to create a listing.');
-            // Redirecting in Livewire component, adapted for Livewire:
             return redirect()->route('login'); // Note: Adapt based on Livewire's handling
         }
 
@@ -78,11 +81,14 @@ class CreateFoodListing extends Component
                 $foodListing->photo_url = json_encode($imagePaths);
             }
             $foodListing->save();
+            $this->submitLocation($foodListing->id, $this->latitude, $this->longitude, $this->searchName);
+
             $this->dispatch('foodListingCreated');
         });
+        $this->reset('name', 'ingredients', 'quantity', 'allergen', 'description', 'status', 'category_id', 'images', 'latitude', 'longitude', 'searchName');
+// $this->reset(['name', 'ingredients', 'quantity', 'allergen', 'description', 'status', 'category_id', 'images']);
 
         session()->flash('success', 'Food listing created successfully.');
-        $this->reset(['name', 'ingredients', 'quantity', 'allergen', 'description', 'status', 'category_id', 'images']);
     }
     public function render()
     {
@@ -93,4 +99,38 @@ class CreateFoodListing extends Component
     {
         dd('Method called');
     }
+
+    protected function submitLocation($foodListingId, $latitude, $longitude, $searchName = null)
+    {
+        $foodListing = FoodListing::find($foodListingId);
+    
+        if ($foodListing) {
+            $location = $foodListing->location()->first();
+    
+            if ($location) {
+                $location->update([
+                    'searchName' => $searchName,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                   
+                ]);
+            } else {
+                $foodListing->location()->create([
+                    'searchName' => $searchName,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                ]);
+            }
+            $this->dispatch('locationSaved');
+        }
+    }
+    public function setLocation($latitude, $longitude, $searchName)
+{
+    $this->latitude = $latitude;
+    $this->longitude = $longitude;
+    $this->searchName = $searchName;
+    $this->reset(['latitude', 'longitude', 'searchName']);
+
+}
+
 }

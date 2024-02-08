@@ -13,6 +13,8 @@ class LocationController extends Controller
             'longitude' => 'required',
             // 'food_listing' => 'optional'
             // 'food_listing_id' => 'required',
+            'food_listing_id' => 'required|exists:food_listings,id', // Ensure this validation rule is appropriate for your database schema
+
         ]);
 
         // Attempt to save the location data
