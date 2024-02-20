@@ -1,3 +1,77 @@
+{{-- <div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
+            <div class="p-6 text-gray-900 dark:text-gray-100">
+                <h3 class="text-lg font-semibold mb-4">Recent Food Listings</h3>
+                @if ($foodListings && $foodListings->count() > 0)
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                        @foreach ($foodListings as $listing)
+                            <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg flex flex-col items-center">
+                                <div class="text-center mb-4">
+                                    <span class="font-medium">Listed by:</span>
+                                    <a href="#" class="text-blue-500 hover:text-blue-700">
+                                        {{ $listing->user->first_name ?? 'N/A' }}
+                                    </a>
+                                    <div>{{ $listing->created_at->diffForHumans() }}</div>
+                                </div>
+                                @if ($listing->photo_url)
+                                    @php $imageUrls = json_decode($listing->photo_url, true); @endphp
+                                    @if (is_array($imageUrls) && count($imageUrls) > 0)
+                                        <img src="{{ asset('storage/' . $imageUrls[0]) }}" alt="Food Image"
+                                            class="rounded-lg mb-4" style="width: auto; height: 200px;">
+                                    @else
+                                        <div>No images available.</div>
+                                    @endif
+                                @else
+                                    <div>No image available</div>
+                                @endif
+                                <div class="text-lg font-semibold mt-4">{{ $listing->name }}</div>
+                                <div class="text-sm">{{ $listing->description }}</div>
+                                <div x-data="{seeMore: false}">
+                                    <button @click="seeMore = !showMore" class="mt-2 text-blue-500 hover:text-blue-700 cursor-pointer">
+                                        See More
+                                    </button>
+                                 <div x-show="seeMore" x-cloak>   
+                                <div>Quantity: {{ $listing->quantity }}</div>
+                                <div>Allergen: {{ $listing->allergen }}</div>
+                                <div>Status:
+                                <span :class="{'bg-green-100 text-green-800': {{ $listing->status }}, 'bg-red-100 text-red-800': !{{ $listing->status }}}">
+                                    {{ $listing->status ? 'Available' : 'Unavailable' }}
+                                </span>
+                                </div>
+                                 </div>
+                                </div>
+                                <div x-data="{ open: false }">
+                                    <button @click="open = !open" class="focus:outline-none">
+                                        <img src="{{ asset('storage/logo/icons8-location (1).gif') }}" alt="Show Location" />
+                                    </button>
+                                    <div x-show="open" x-cloak>
+                                        @if ($listing->location && $listing->location->latitude && $listing->location->longitude)
+
+                                            <div id="map-{{ $listing->id }}"  class="map-container w-full h-56 mb-4"
+                                                 x-init-map="open" 
+                                                 data-listing-id="{{ $listing->id }}"
+                                                 data-latitude="{{ $listing->location->latitude }}"
+                                                 data-longitude="{{ $listing->location->longitude }}"
+                                                 style="height: 100px; width: 200%;">
+                                                <!-- The map will be initialized here -->
+                                            </div>
+                                        @else
+                                            <div>No location available.</div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    {{ $foodListings->links() }}
+                @else
+                    <p>No food listings available.</p>
+                @endif
+            </div>
+        </div>
+    </div>
+</div> --}}
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
@@ -17,9 +91,8 @@
                                 @if ($listing->photo_url)
                                     @php $imageUrls = json_decode($listing->photo_url, true); @endphp
                                     @if (is_array($imageUrls) && count($imageUrls) > 0)
-                                        <!-- Adjusted image size for a larger display -->
                                         <img src="{{ asset('storage/' . $imageUrls[0]) }}" alt="Food Image"
-                                            class="rounded-lg mb-4" style="width: auto; height: 200px;">
+                                            class="rounded-lg mb-4" style="width: auto; height: 1px;">
                                     @else
                                         <div>No images available.</div>
                                     @endif
@@ -27,23 +100,33 @@
                                     <div>No image available</div>
                                 @endif
                                 <div class="text-lg font-semibold mt-4">{{ $listing->name }}</div>
-                                <div class="text-sm">{{ $listing->description }}</div>
-                                <div>Quantity: {{ $listing->quantity }}</div>
-                                <div>Allergen: {{ $listing->allergen }}</div>
-                                <div>Status: {{ $listing->status ? 'Available' : 'Unavailable' }}</div>
+                               
+                                <div x-data="{ seeMore: false }">
+                                    <button @click="seeMore = !seeMore" class="mt-2 text-blue-500 hover:text-blue-700 cursor-pointer">
+                                        See More
+                                    </button>
+                                    <div x-show="seeMore" x-cloak>
+                                        <div class="text-sm">Food description{{ $listing->description }}</div>
+                                        <div>Quantity: {{ $listing->quantity }}</div>
+                                        <div>Allergen: {{ $listing->allergen }}</div>
+                                        <div>Status: 
+                                            <span :class="{'bg-green-100 text-green-800': {{ $listing->status }}, 'bg-red-100 text-red-800': !{{ $listing->status }}}">
+                                                {{ $listing->status ? 'Available' : 'Unavailable' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div x-data="{ open: false }">
                                     <button @click="open = !open" class="focus:outline-none">
                                         <img src="{{ asset('storage/logo/icons8-location (1).gif') }}" alt="Show Location" />
                                     </button>
-                                                                        <div x-show="open" x-cloak>
+                                    <div x-show="open" x-cloak>
                                         @if ($listing->location && $listing->location->latitude && $listing->location->longitude)
-
-                                            <div id="map-{{ $listing->id }}"  class="map-container w-full h-56 mb-4"
+                                            <div id="map-{{ $listing->id }}" class="map-container w-full h-56"
                                                  x-init-map="open" 
                                                  data-listing-id="{{ $listing->id }}"
                                                  data-latitude="{{ $listing->location->latitude }}"
-                                                 data-longitude="{{ $listing->location->longitude }}"
-                                                 style="height: 100px; width: 200%;">
+                                                 data-longitude="{{ $listing->location->longitude }}">
                                                 <!-- The map will be initialized here -->
                                             </div>
                                         @else
@@ -51,7 +134,8 @@
                                         @endif
                                     </div>
                                 </div>
-
+                                {{-- @livewire('reservation.reservations') --}}
+                                @livewire('reserve.reservations', ['food_listing_id' => $listing->id], key($listing->id))
 
                             </div>
                         @endforeach
@@ -91,9 +175,6 @@ function initMap() {
         }
     });
 }
-
-
-
 document.addEventListener('alpine:init', () => {
     Alpine.directive('init-map', (el, { expression }, { evaluate }) => {
         Alpine.effect(() => {

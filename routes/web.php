@@ -5,12 +5,14 @@ use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\reserve\ShowReservation;
 use App\Livewire\GeocodePostCode\Location;
 use App\Livewire\Profile\ProfileComponent;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\GoogleMapController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\GoogleMapController;
 use App\Livewire\FoodListing\CreateFoodListing;
+use App\Livewire\FoodListing\ShowFoodListing;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,13 +35,14 @@ Route::get('/dashboard', Dashboard::class)
     ->middleware(['auth'])
     ->name('dashboard');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+
 
 Route::get('/foodlisting', CreateFoodListing::class)
     ->middleware(['auth']) // Make sure the user is authenticated
     ->name('foodlisting');
+Route::get('/showFoodListing', ShowFoodListing::class)
+    ->middleware(['auth']) // Make sure the user is authenticated
+    ->name('showFoodListing');
 
     Route::post('/logout', function () {
         Auth::logout();
@@ -48,24 +51,14 @@ Route::get('/foodlisting', CreateFoodListing::class)
         return redirect('/welcome'); // Or wherever you wish to redirect after logout
     })->name('logout');
  
-    Route::get('profile', ProfileComponent::class)->middleware(['auth'])->name('profile.profile-updating');    
+    Route::get('/profile', ProfileComponent::class)->middleware(['auth'])->name('profile.profile-updating');    
     Route::middleware('auth')->group(function () {
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/profile/{id}', [ProfileController::class, 'showProfile'])->name('profile.showProfile');
     });
 
-    Route::get('/location', Location::class)->name('geolocation');
-    Route::get('/test-google-api', function () {
-        $term = 'BayCampus';
-        $apiKey = env('GOOGLE_MAPS_API_KEY');
-        $response = Http::get("https://maps.googleapis.com/maps/api/place/autocomplete/json", [
-            'input' => $term,
-            'key' => $apiKey,
-        ]);
     
-        dd($response->json());
-    });
     // In routes/web.php
 
 Route::get('/google-map', function () {
@@ -73,5 +66,10 @@ Route::get('/google-map', function () {
 })->name('google-map');
 
 Route::post('/save-location', [LocationController::class, 'saveLocation'])->name('saveLocation');
+
+Route::get('/reservations', ShowReservation::class)
+    ->middleware(['auth'])
+    ->name('reservations');
+
 
 require __DIR__.'/auth.php';

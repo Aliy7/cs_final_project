@@ -57,7 +57,7 @@ class ProfileComponent extends Component
     public function render()
     {
         return view('livewire.profile.profile-updating')
-        ->layout('layouts.app');
+        ->layout('livewire.app.app-layout');
     }
 
     public function save()

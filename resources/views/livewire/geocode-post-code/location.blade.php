@@ -1,4 +1,4 @@
-<div>
+{{-- <div>
     <input id="textbox_id" type="text" wire:model.debounce.500ms="term" placeholder="Enter address term...">
 
     <script>
@@ -73,4 +73,4 @@
         });
     });
     </script>
-     --}} 
+     --}}  --}}

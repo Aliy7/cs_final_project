@@ -15,14 +15,22 @@ class ShowFoodListing extends Component
 
     public $foodListing;
 
-    // protected $listeners = [
-    //     'foodListingCreated' => 'handleFoodListingCreated',
-    // ];
+    protected $listeners = [
+        'foodListingCreated' => 'handleFoodListingCreated',
+       
+    ];
 
     #[on('foodListingCreated')]
-    public function updateFoodList($foodListing = null){
-    // dd('foodlistings');
+    public function handleFoodListingCreated()
+    {
+        // Optionally refresh $foodListings if needed
+        $this->foodListing = $this->getFoodListings();
     }
+
+    // #[on('reserved')]
+    // public function reserved($foodListing_id){
+
+    // }
 
     // #[On('locationSaved')]
     // public function updateLocation(){
@@ -32,7 +40,8 @@ class ShowFoodListing extends Component
     {
         return view('livewire.food-listing.show-food-listing', [
             'foodListings' => $this->getFoodListings(),
-        ]);
+        ]) ->layout('livewire.app.app-layout');
+        ;
     }
 
     public function getFoodListings()

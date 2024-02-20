@@ -25,7 +25,7 @@ class FoodListing extends Model
         'status',
     ];
     protected $guarded = [
-        'user_id', 
+        'user_id',
         'category_id'
     ];
     public function location()
@@ -46,5 +46,10 @@ class FoodListing extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 }

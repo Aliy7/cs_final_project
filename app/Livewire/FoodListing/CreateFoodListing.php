@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Livewire\FoodListing;
-
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\FoodListing;

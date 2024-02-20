@@ -27,7 +27,7 @@
                         <path fill-rule="evenodd" d="M12 20a8 8 0 0 1-5-1.8v-.6c0-1.8 1.5-3.3 3.3-3.3h3.4c1.8 0 3.3 1.5 3.3 3.3v.6a8 8 0 0 1-5 1.8ZM2 12a10 10 0 1 1 10 10A10 10 0 0 1 2 12Zm10-5a3.3 3.3 0 0 0-3.3 3.3c0 1.7 1.5 3.2 3.3 3.2 1.8 0 3.3-1.5 3.3-3.3C15.3 8.6 13.8 7 12 7Z" clip-rule="evenodd"/>
                       </svg>
                       
-                      
+            
                     </button>
                   </div>
                   <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow" id="dropdown-user">
@@ -140,6 +140,16 @@
                   </a>
                </li>
                <li>
+                  <a href="{{ route('reservations') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-blue-500 group">
+                      <svg class="w-5 h-5 text-white transition duration-75 group-hover:text-bg-teal-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21"> 
+                          <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
+                          <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
+                      </svg> 
+                      <span class="ms-3">Reservations</span>
+                  </a>
+              </li>
+              
+               <li>
                   <form method="POST" action="{{ route('logout') }}">
                       @csrf
                       <button type="submit" class="flex items-center p-2 white0 rounded-lg hover:bg-blue-500 group">
@@ -163,13 +173,13 @@
                </li>
 
                <li>
-                  <a href="{{ route('geolocation') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-blue-500 group">
+                  {{-- <a href="{{ route('geolocation') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-blue-500 group"> --}}
                       <svg class="w-5 h-5 text-white transition duration-75 group-hover:text-bg-teal-200	" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21"> 
                           <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
                           <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
                       </svg> 
                       <span class="ms-3">Location</span>
-                  </a>
+                  {{-- </a> --}}
               </li>
             </ul>
          </div>

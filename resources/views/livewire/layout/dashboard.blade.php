@@ -29,6 +29,7 @@
 <div class="block show-food-listing">
     @livewire('foodlisting.show-food-listing')
 </div> 
+{{-- @livewire('reserve.show-reservation') --}}
 
                         </div>
                     </div>

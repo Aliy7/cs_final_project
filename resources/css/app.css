@@ -25,7 +25,8 @@
     bottom: 0;
     overflow-y: auto;
     z-index: 10; /* Below the navbar and sidebar */
-  
+    border: 1px solid red; /* Temporary visual aid */
+
     padding: 1rem; /* Padding inside the content for aesthetics */
    
 }
@@ -111,3 +112,54 @@ footer {
 }
 
 
+/*
+Modal 
+*/
+/* Add this to your CSS file */
+.modal-backdrop {
+    background-color: rgba(49, 49, 49, 0.8);
+    z-index: 9999; /* High z-index to ensure it's on top of other content */
+}
+
+.modal {
+    display: absolute;
+    align-items: center;
+    justify-content: center;
+    z-index: 10; /* Even higher z-index for the modal content */
+}
+
+.modal-content {
+    /* margin: 0 auto;  */
+    top: 400px; 
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10000; /* Ensure the content is above the backdrop */
+    max-width: 500px; /* Or any maximum width you prefer */
+}
+.reservation-content {
+    position: absolute;
+    top: 100px; /* Height of the navbar */
+    left: 240px; /* Width of the sidebar */
+    right: 0;
+    bottom: 0;
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 1rem; /* Padding inside the content for aesthetics */
+    z-index: 10; /* Ensures the content layer is above other elements */
+}
+
+
+
+/* Responsive media query for smaller screens */
+@media (max-width: 768px) {
+    .reservation-content {
+        left: 0; /* Adjust the sidebar to 0 for smaller screens */
+        top: 60px; /* Adjust the top bar to a smaller height if necessary */
+    }
+}
+
+.table-responsive {
+    border: 1px solid red; /* Temporary visual aid */
+   
+}
