@@ -11,6 +11,7 @@ use App\Livewire\Profile\ProfileComponent;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\GoogleMapController;
+use App\Livewire\Application\ApplicationComponent;
 use App\Livewire\FoodListing\CreateFoodListing;
 use App\Livewire\FoodListing\ShowFoodListing;
 
@@ -71,5 +72,6 @@ Route::get('/reservations', ShowReservation::class)
     ->middleware(['auth'])
     ->name('reservations');
 
+Route::get('/application-form', ApplicationComponent::class)->name('application');
 
 require __DIR__.'/auth.php';

@@ -16,6 +16,10 @@ class Reservations extends Component
 
     public function mount($food_listing_id)
     {
+    // {
+    //     if (auth()->user()->application->status !== 'approved') {
+    //         return redirect()->to('/application-form'); 
+    //     }
         $this->food_listing_id = $food_listing_id;
     }
     public function render()
