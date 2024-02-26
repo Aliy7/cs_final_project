@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Application;
 
+use App\Models\Address;
 use Livewire\Component;
 use App\Models\Application;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationComponent extends Component
 {
@@ -16,12 +18,7 @@ class ApplicationComponent extends Component
     public $addresses = []; 
     public $street, $city, $state, $postalCode, $country;
 
-    // protected $rules = [
-    //     'family_income' => 'required|numeric',
-    //     'name' => 'required|string|max:255',
-    //     'address_id' => 'required|exists:addresses,id',
-    //     'is_student' => 'required|boolean',
-    // ];
+
     protected $rules = [
         'family_income' => 'required|numeric',
         'name' => 'required|string|max:255',
@@ -33,42 +30,54 @@ class ApplicationComponent extends Component
         'country' => 'required|string|max:255',
     ];
     
+
 // public function submit()
 // {
 //     $this->validate();
 
-//     // Check if the user has already submitted an application
+//     // Prevent duplicate applications
 //     if (Application::where('user_id', auth()->id())->exists()) {
 //         session()->flash('error', 'You have already submitted an application.');
-//         return redirect()->to('/dashboard'); // Adjust the redirection as needed
+//         return redirect()->to('/dashboard');
 //     }
 
-//     // Ensure the user is a student
+//     // Check if the applicant is a student
 //     if (!$this->is_student) {
-//         session()->flash('error', 'Only students can submit applications at this time.');
-//         return redirect()->to('/application-form'); // Adjust as necessary
+//         session()->flash('error', 'Currently, only students can submit applications.');
+//         return redirect()->to('/application-form');
 //     }
 
-//     // Determine the application status based on family income
-//     $status = $this->family_income <= 21000 ? 'approved' : 'pending';
-
-//     // Create the application instance
-//     $application = new Application([
-//         'user_id' => auth()->id(),
-//         'family_income' => $this->family_income,
-//         'name' => $this->name,
-//         'address_id' => $this->address_id,
-//         'is_student' => $this->is_student,
-//         'status' => $status,
+//     // Create an Address record first
+//     $address = Address::create([
+//         'street_name' => $this->street,
+//         'city' => $this->city,
+//         'state' => $this->state,
+//         'postcode' => $this->postalCode,
+//         'country' => $this->country,
 //     ]);
 
-//     // Save the application
-//     $application->save();
+//     // Determine application status based on family income and proceed accordingly
+//     if ($this->family_income <= 21000) {
+//         $status = 'approved';
+//         // Use the newly created address's ID for the application
 
-//     $message = $status === 'approved' ? 'Your application has been automatically approved.' : 'Your application has been submitted successfully and is pending approval.';
-//     session()->flash('message', $message);
+        
+       
+//     } else if ($this->family_income > 21000) {
+//         $status = 'pending';
+//         // Use the newly created address's ID for the application
+//         $application = Application::create([
+//             'user_id' => auth()->id(),
+//             'family_income' => $this->family_income,
+//             'name' => $this->name,
+//             'address_id' => $address->id,
+//             'is_student' => $this->is_student,
+//             'status' => $status,
+//         ]);
 
-//     return redirect()->to('/dashboard'); // Or wherever you want to redirect after submission.
+//         session()->flash('message', 'Your application has been submitted and is currently pending approval. Please wait for further instructions.');
+//         return redirect()->to('/application-status');
+//     }
 // }
 public function submit()
 {
@@ -86,44 +95,38 @@ public function submit()
         return redirect()->to('/application-form');
     }
 
-    // Create an Address record first
-    $address = \App\Models\Address::create([
-        'street' => $this->street,
-        'city' => $this->city,
-        'state' => $this->state,
-        'postalCode' => $this->postalCode,
-        'country' => $this->country,
-    ]);
+    // Create an Address record first using a more verbose but consistent approach
+    $address = new Address();
+    $address->street_name = $this->street;
+    $address->city = $this->city;
+    $address->state = $this->state;
+    $address->postcode = $this->postalCode;
+    $address->country = $this->country;
+    $address->user_id = Auth::id();
 
-    // Determine application status based on family income and proceed accordingly
+    $address->save();
+
+    // Initialize the Application object
+    $application = new Application();
+    $application->user_id = Auth::id();
+    $application->family_income = $this->family_income;
+    $application->name = $this->name;
+    $application->address_id = $address->id;
+    $application->is_student = $this->is_student;
+
+    // Determine application status based on family income and set messages accordingly
     if ($this->family_income <= 21000) {
-        $status = 'approved';
-        // Use the newly created address's ID for the application
-        $application = Application::create([
-            'user_id' => auth()->id(),
-            'family_income' => $this->family_income,
-            'name' => $this->name,
-            'address_id' => $address->id,
-            'is_student' => $this->is_student,
-            'status' => $status,
-        ]);
+        $application->status = 'approved';
+        $application->save();
 
         session()->flash('message', 'Congratulations! Your application has been automatically approved. You can now proceed to make reservations.');
         return redirect()->to('/dashboard');
     } else if ($this->family_income > 21000) {
-        $status = 'pending';
-        // Use the newly created address's ID for the application
-        $application = Application::create([
-            'user_id' => auth()->id(),
-            'family_income' => $this->family_income,
-            'name' => $this->name,
-            'address_id' => $address->id,
-            'is_student' => $this->is_student,
-            'status' => $status,
-        ]);
+        $application->status = 'pending';
+        $application->save();
 
         session()->flash('message', 'Your application has been submitted and is currently pending approval. Please wait for further instructions.');
-        return redirect()->to('/application-status');
+        return redirect()->to('/dashboard');
     }
 }
 

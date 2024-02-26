@@ -31,6 +31,8 @@
 </div> 
 {{-- @livewire('reserve.show-reservation') --}}
 
+
+
                         </div>
                     </div>
                 </div>

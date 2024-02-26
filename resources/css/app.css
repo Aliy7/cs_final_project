@@ -152,7 +152,16 @@ Modal
     z-index: 10; /* Ensures the content layer is above other elements */
 }
 
-
+.application-display-content {
+    position: absolute;
+    top: 100px; /* Height of the navbar */
+    left: 240px; /* Width of the sidebar */
+    right: 0;
+    bottom: 0;
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 1rem; /* Padding inside the content for aesthetics */
+    z-index: 10; /* Ensures the content layer is above other elements */
+}
 
 /* Responsive media query for smaller screens */
 @media (max-width: 768px) {

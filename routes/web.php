@@ -5,15 +5,17 @@ use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\CheckApplicationStatus;
 use App\Livewire\reserve\ShowReservation;
 use App\Livewire\GeocodePostCode\Location;
 use App\Livewire\Profile\ProfileComponent;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\GoogleMapController;
-use App\Livewire\Application\ApplicationComponent;
-use App\Livewire\FoodListing\CreateFoodListing;
 use App\Livewire\FoodListing\ShowFoodListing;
+use App\Livewire\FoodListing\CreateFoodListing;
+use App\Livewire\Application\ApplicationComponent;
+use App\Livewire\Application\ShowApplications;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +74,8 @@ Route::get('/reservations', ShowReservation::class)
     ->middleware(['auth'])
     ->name('reservations');
 
-Route::get('/application-form', ApplicationComponent::class)->name('application');
+Route::get('/application-form', ApplicationComponent::class)->name('application-form')->middleware(['auth']);
+
+Route::get('/show-application', ShowApplications::class)->middleware(['auth'])->name('show-application');
 
 require __DIR__.'/auth.php';

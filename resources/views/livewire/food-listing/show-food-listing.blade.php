@@ -89,16 +89,17 @@
                                     <div>{{ $listing->created_at->diffForHumans() }}</div>
                                 </div>
                                 @if ($listing->photo_url)
-                                    @php $imageUrls = json_decode($listing->photo_url, true); @endphp
-                                    @if (is_array($imageUrls) && count($imageUrls) > 0)
-                                        <img src="{{ asset('storage/' . $imageUrls[0]) }}" alt="Food Image"
-                                            class="rounded-lg mb-4" style="width: auto; height: 1px;">
-                                    @else
-                                        <div>No images available.</div>
-                                    @endif
+                                @php $imageUrls = json_decode($listing->photo_url, true); @endphp
+                                @if (is_array($imageUrls) && count($imageUrls) > 0)
+                                    <img src="{{ asset('storage/' . $imageUrls[0]) }}" alt="Food Image"
+                                        class="rounded-lg mb-4" style="width: auto; height: 200px;">
                                 @else
-                                    <div>No image available</div>
+                                    <div>No images available.</div>
                                 @endif
+                            @else
+                                <div>No image available</div>
+                            @endif
+                            
                                 <div class="text-lg font-semibold mt-4">{{ $listing->name }}</div>
                                
                                 <div x-data="{ seeMore: false }">
@@ -134,8 +135,8 @@
                                         @endif
                                     </div>
                                 </div>
-                                {{-- @livewire('reservation.reservations') --}}
-                                @livewire('reserve.reservations', ['food_listing_id' => $listing->id], key($listing->id))
+                                {{-- @livewire('reserve.reservations', ['food_listing_id' => $listing->id]) --}}
+                                @livewire('reserve.reservations', ['food_listing_id' => $listing->id], key('reservation-'.$listing->id))
 
                             </div>
                         @endforeach
