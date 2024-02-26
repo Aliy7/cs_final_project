@@ -163,13 +163,15 @@
             </div>
         </div>
     </div>
-   
-      <script>
-    // Inside your script tag
-    document.addEventListener('DOMContentLoaded', () => {
-        // ... existing code ...
-
-        window.addEventListener('modal-message', event => {
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Livewire Event Listeners
+            Livewire.on('redirectToApplicationForm', () => {
+                window.location.href = '/application-form';
+            });
+    
+            window.addEventListener('modal-message', event => {
             const data = event.detail;
 
             if(data.type === 'success'){
@@ -184,7 +186,5 @@
             }
         });
     });
-</script>
-
-
+    </script>
     
