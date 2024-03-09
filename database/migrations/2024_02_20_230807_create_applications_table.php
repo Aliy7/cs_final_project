@@ -13,13 +13,18 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('address_id')->constrained('addresses')->onUpdate('cascade')->onDelete('cascade');
+        
             $table->decimal('family_income', 8, 2);
             $table->string('name');
             $table->boolean('is_student');
             $table->string('status')->default('pending'); 
             $table->timestamps();
+
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('address_id')->constrained('addresses')->onUpdate('cascade')->onDelete('cascade');
+
+            // $table->foreignId('email_notification_id')->constrained('email_notifications')->onUpdate('cascade')->onDelete('cascade'); 
+      
         });
         
     }

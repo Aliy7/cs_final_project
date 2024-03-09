@@ -1,15 +1,21 @@
 <?php
 
 namespace App\Livewire\FoodListing;
+use App\Models\User;
 use Livewire\Component;
+use App\Mail\FoodPosted;
 use App\Models\Category;
 use App\Models\FoodListing;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use App\Livewire\App\AppLayout;
+use App\Models\EmailNotification;
+use App\Events\FoodListingCreated;
+use App\Mail\FoodPostedNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class CreateFoodListing extends Component
@@ -22,6 +28,9 @@ class CreateFoodListing extends Component
     public $images = [];
     public $imageUrls = [];
     public $categories;
+    public $subject;
+    public $email_body;
+
 
     protected $listeners = [
         "updateLocationCoordinates" => 'setLocation'
@@ -58,9 +67,10 @@ class CreateFoodListing extends Component
             session()->flash('error', 'You must be logged in to create a listing.');
             return redirect()->route('login'); // Note: Adapt based on Livewire's handling
         }
+        $foodListing = new FoodListing();
 
-        DB::transaction(function () {
-            $foodListing = new FoodListing();
+
+        DB::transaction(function () use ($foodListing){
             $foodListing->name = $this->name;
             $foodListing->ingredients = $this->ingredients;
             $foodListing->quantity = $this->quantity;
@@ -80,12 +90,20 @@ class CreateFoodListing extends Component
                 $foodListing->photo_url = json_encode($imagePaths);
             }
             $foodListing->save();
-            $this->submitLocation($foodListing->id, $this->latitude, $this->longitude, $this->searchName);
 
-            $this->dispatch('foodListingCreated');
+        
+            $this->submitLocation($foodListing->id, $this->latitude, $this->longitude, $this->searchName);
+            
+          
+                $this->sendFoodListingCreatedEmail($foodListing);
+            
         });
+
+        if ($foodListing) {
+            $this->sendFoodListingCreatedEmail($foodListing);
+        }
         $this->reset('name', 'ingredients', 'quantity', 'allergen', 'description', 'status', 'category_id', 'images', 'latitude', 'longitude', 'searchName');
-// $this->reset(['name', 'ingredients', 'quantity', 'allergen', 'description', 'status', 'category_id', 'images']);
+        $this->dispatch('foodListingCreated');
 
         session()->flash('success', 'Food listing created successfully.');
     }
@@ -131,5 +149,95 @@ class CreateFoodListing extends Component
     $this->reset(['latitude', 'longitude', 'searchName']);
 
 }
+// protected function sendFoodListingCreatedEmail($foodListing)
+// {
+//     $users = User::all(); // Retrieve all users or a subset as needed.
+
+//     foreach ($users as $user) {
+//         $details = [
+//             'email' => $user->email,
+//             'subject' => 'New Food Listing: ' ,
+//             'title' => 'A new food listing has been posted!',
+//             'body' => 'Check out the new food listing named ',
+//             'url' => 'https://final_projects.test/dashboard',  
+//             'footer' => 'Team Food Sharing App',
+
+//         ];
+
+//         Mail::to($user->email)->queue(new FoodPosted($details));
+
+//         // Optionally save the email notification to the database
+     
+//         $notification = new EmailNotification();
+
+//         $notification->user_id = Auth::id();
+//         $notification->food_listing_id = $foodListing->id;
+//         $notification->is_read = false;
+//         $notification->subject = $details['subject'];
+//         $notification->email_body = $details['body'];
+//         $notification->save();
+//     }
+// }
+
+protected function sendFoodListingCreatedEmail($foodListing)
+{
+    $users = User::all(); // Retrieve all users or a subset as needed.
+
+    foreach ($users as $user) {
+        $emailSubject = 'New Food Listing: ' . ($foodListing->name ?? 'Unnamed Listing'); // Ensure there's a default value
+
+        $details = [
+            'email' => $user->email,
+            'name' => $user->first_name?? 'Valued User', // Include a fallback default name.
+
+            'subject' => $emailSubject,
+            'title' => 'A new food listing has been posted!',
+            'body' => 'We are excited to announce we have a new food listing named ' . ($foodListing->name ?? 'Unnamed Listing'),
+            'url' => 'https://final_projects.test/dashboard',  
+            'footer' => 'Team Food Sharing App',
+        ];
+
+        Mail::to($user->email)->queue(new FoodPostedNotification($details));
+
+        // Save the email notification to the database
+        $notification = new EmailNotification();
+        $notification->user_id = $user->id;
+        $notification->food_listing_id = $foodListing->id;
+        $notification->is_read = false;
+        $notification->subject = $emailSubject; // This should not be null or empty
+        $notification->email_body = $details['body'];
+        $notification->save();
+    }
+}
+
+// protected function sendFoodListingCreatedEmail($foodListing)
+// {
+//     $users = User::all();
+
+//     foreach ($users as $user) {
+//         $emailSubject = 'New Food Listing: ' . ($foodListing->name ?? 'Unnamed Listing');
+//         $details = [
+//             'email' => $user->email,
+//             'name' => $user->first_name, // or 'name' => $user->name,
+//             'subject' => $emailSubject,
+//             'title' => 'A new food listing has been posted!',
+//             'body' => 'We are excited to announce we have a new food listing named ' . ($foodListing->name ?? 'Unnamed Listing'),
+//             'url' => 'https://final_projects.test/dashboard',
+//             'footer' => 'Team Food Sharing App',
+//         ];
+        
+
+//         Mail::to($user->email)->queue(new FoodPosted($details));
+
+//         // Save the notification to the database
+//         $notification = new EmailNotification();
+//         $notification->user_id = $user->id;
+//         $notification->food_listing_id = $foodListing->id;
+//         $notification->is_read = false;
+//         $notification->subject = $emailSubject;  // Correctly use the defined $emailSubject
+//         $notification->email_body = $details['body'];
+//         $notification->save();
+//     }
+// }
 
 }

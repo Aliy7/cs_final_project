@@ -4,30 +4,37 @@
 
         <!-- Name -->
         <div>
-            <x-input-label for="username" :value="__('Name')" />
-            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+            <x-input-label for="username" :value="__('User name')" />
+            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" aria-placeholder="Enter User Name here" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" aria-placeholder="Enter Your Email" autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
         
         <!-- Name -->
         <div>
             <x-input-label for="first_name" :value="__('First-Name')" />
-            <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autofocus autocomplete="first_name" />
+            <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" aria-placeholder="Enter First Name" required autofocus autocomplete="first_name" />
             <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
         </div>
 
          <!-- Name -->
          <div>
             <x-input-label for="last_name" :value="__('Last-Name')" />
-            <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus autocomplete="last_name" />
+            <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" aria-placeholder="Enter Surname" autofocus autocomplete="last_name" />
             <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
+        </div>
+
+        <!--Phone Number-->
+        <div>
+            <x-input-label for="phone_number" :value="__('Phone Number')" />
+            <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone_number')" aria-placeholder="Enter Your Phone Number" required autofocus autocomplete="phone_number" />
+            <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
         </div>
         <!-- Password -->
         <div class="mt-4">

@@ -2,11 +2,16 @@
 
 namespace App\Livewire\Application;
 
+use App\Models\User;
 use App\Models\Address;
 use Livewire\Component;
 use App\Models\Application;
 use Illuminate\Validation\Rule;
+use App\Models\EmailNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ApplicationEmails\ApprovedAppEmail;
+use App\Mail\ApplicationEmails\ApplicationSubmitted;
 
 class ApplicationComponent extends Component
 {
@@ -31,54 +36,6 @@ class ApplicationComponent extends Component
     ];
     
 
-// public function submit()
-// {
-//     $this->validate();
-
-//     // Prevent duplicate applications
-//     if (Application::where('user_id', auth()->id())->exists()) {
-//         session()->flash('error', 'You have already submitted an application.');
-//         return redirect()->to('/dashboard');
-//     }
-
-//     // Check if the applicant is a student
-//     if (!$this->is_student) {
-//         session()->flash('error', 'Currently, only students can submit applications.');
-//         return redirect()->to('/application-form');
-//     }
-
-//     // Create an Address record first
-//     $address = Address::create([
-//         'street_name' => $this->street,
-//         'city' => $this->city,
-//         'state' => $this->state,
-//         'postcode' => $this->postalCode,
-//         'country' => $this->country,
-//     ]);
-
-//     // Determine application status based on family income and proceed accordingly
-//     if ($this->family_income <= 21000) {
-//         $status = 'approved';
-//         // Use the newly created address's ID for the application
-
-        
-       
-//     } else if ($this->family_income > 21000) {
-//         $status = 'pending';
-//         // Use the newly created address's ID for the application
-//         $application = Application::create([
-//             'user_id' => auth()->id(),
-//             'family_income' => $this->family_income,
-//             'name' => $this->name,
-//             'address_id' => $address->id,
-//             'is_student' => $this->is_student,
-//             'status' => $status,
-//         ]);
-
-//         session()->flash('message', 'Your application has been submitted and is currently pending approval. Please wait for further instructions.');
-//         return redirect()->to('/application-status');
-//     }
-// }
 public function submit()
 {
     $this->validate();
@@ -117,12 +74,15 @@ public function submit()
     // Determine application status based on family income and set messages accordingly
     if ($this->family_income <= 21000) {
         $application->status = 'approved';
+
         $application->save();
 
         session()->flash('message', 'Congratulations! Your application has been automatically approved. You can now proceed to make reservations.');
         return redirect()->to('/dashboard');
     } else if ($this->family_income > 21000) {
         $application->status = 'pending';
+
+        $this->submittedNotification($application);
         $application->save();
 
         session()->flash('message', 'Your application has been submitted and is currently pending approval. Please wait for further instructions.');
@@ -148,4 +108,44 @@ public function submit()
         ],
     ]);
 }
+
+
+public function submittedNotification($application) {
+    $user = $application->user;
+    $details = [
+        'email' => $user->email,
+        'name' => $user->first_name ?? 'User',
+        'subject' => 'We have received you application now',
+        'title' => 'Your Application Has Been Submitted',
+        'body' => 'Your application is now under review.',
+        'url' => url('/dashboard'),
+        'footer' => 'Thanks, Team Food Sharing'
+    ];
+
+    Mail::to($user->email)->send(new ApplicationSubmitted($details));
+   
+    $this->storeNotification($application, $details['subject'], $details['body']);
 }
+
+protected function storeNotification($application, $subject, $body) {
+    $userId = Auth::id();
+
+    if (!$userId) {
+        return;
+    }
+
+    $notification = new EmailNotification();
+    $notification->user_id = $userId;
+    $notification->is_read = false;
+    $notification->subject = $subject;
+    $notification->email_body = $body;
+    $notification->save();
+}
+
+
+
+}
+
+
+// }
+

@@ -22,4 +22,14 @@ class Application extends Model
     {
         return $this->hasOne(Address::class);
     }
+
+    public function emailNotifications()
+    {
+        return $this->hasOne(EmailNotification::class); 
+    }
+
+//     public function emailNotification()
+//     {
+//         return $this->belongsTo(EmailNotification::class);
+// }
 }

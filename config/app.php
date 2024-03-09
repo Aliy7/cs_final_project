@@ -171,6 +171,8 @@ return [
         App\Providers\VoltServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\GeocodingServiceProvider::class,
+        NotificationChannels\Twilio\TwilioProvider::class,
+
 
     ])->toArray(),
 

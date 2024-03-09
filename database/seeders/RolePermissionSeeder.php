@@ -37,6 +37,8 @@ class RolePermissionSeeder extends Seeder
                 'username' => 'Hassan bin Ali',
                 'first_name' => 'Hassan',
                 'last_name' => 'Bin Ali',
+                'phone_number' => '0937647433',
+
                 'password' => Hash::make('Swansea123@')
             ]
         );
@@ -44,11 +46,13 @@ class RolePermissionSeeder extends Seeder
 
         // Create moderator user with some privillege
         $modUser = User::firstOrCreate(
-            ['email' => 'hussein@swansea.ac.uk'],
+            ['email' => 'projectmy32@gmail.com'],
             [
                 'username' => 'Hussein bin ali',
                 'first_name' => 'Hussein',
                 'last_name' => 'Bin Ali',
+                'phone_number' => '0937647433',
+                
                 'password' => Hash::make('Swansea123@')
             ]
         );

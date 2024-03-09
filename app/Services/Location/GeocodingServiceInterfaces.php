@@ -3,7 +3,6 @@ namespace App\Services\Location;
 
 interface GeocodingServiceInterfaces {
 
-    public function adrressAutoComp(string $term);
-    public function findAddress(string $id);
+    public function getCoordinatesFromPostcode(string $postcode): array;
 
 }

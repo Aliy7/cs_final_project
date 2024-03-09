@@ -12,7 +12,7 @@ class Reservation extends Model
     const STATUS_PENDING = 'pending';
     const STATUS_APPROVED = 'approved';
     const STATUS_CANCELLED = 'cancelled';
-    protected $fillable = ['reservation_date', 'status'];
+    protected $fillable = ['reservation_date', 'status', 'hasCollected'];
 
     protected $guarded = ['user_id', 'food_item_id'];
     public function user(){
