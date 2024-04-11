@@ -8,6 +8,9 @@ class Dashboard extends Component
 {
 
   
+    protected $listerners = [
+        'FAQEdited' => '$FAQEdited'
+    ];
 
     public function render()
     {

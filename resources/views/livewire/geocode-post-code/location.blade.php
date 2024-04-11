@@ -73,4 +73,27 @@
         });
     });
     </script>
-     --}}  --}}
+     --}}  
+
+     <div>
+        <input type="text" wire:model.debounce.500ms="term" placeholder="Enter address term...">
+        
+        @if (!empty($suggestions))
+            <ul>
+                @foreach ($suggestions as $suggestion)
+                    <li wire:click="setSelectedAddress('{{ $suggestion['id'] }}')">{{ $suggestion['text'] }}</li>
+                @endforeach
+            </ul>
+        @endif
+    
+        @if (!empty($selectedAddress))
+            <div>
+                <p>Selected Address: {{ implode(', ', $selectedAddress['formatted_address'] ?? []) }}</p>
+                <input type="text" wire:model="selectedAddress.line_1" placeholder="Address Line 1">
+                <input type="text" wire:model="selectedAddress.town_or_city" placeholder="Town/City">
+                <input type="text" wire:model="selectedAddress.postcode" placeholder="Postcode">
+                <!-- Include other fields as necessary -->
+            </div>
+        @endif
+    </div>
+    

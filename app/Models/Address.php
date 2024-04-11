@@ -12,7 +12,7 @@ class Address extends Model
     use HasFactory;
 
     protected $fillable = [
-        'street', 'city', 'state', 'postalCode', 'country'
+        'street', 'city', 'county', 'postcode', 'country'
     ];
 
     protected $guarded = [

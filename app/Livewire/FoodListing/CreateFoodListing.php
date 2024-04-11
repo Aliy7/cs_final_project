@@ -33,7 +33,8 @@ class CreateFoodListing extends Component
 
 
     protected $listeners = [
-        "updateLocationCoordinates" => 'setLocation'
+        "updateLocationCoordinates" => 'setLocation',
+        'inputValueUpdated' => 'updateInputValue',
     ];
     protected $rules = [
         'name' => 'required|string|max:200',
@@ -49,6 +50,7 @@ class CreateFoodListing extends Component
 
     public function mount()
     {
+        
         $this->categories = Category::all();
     }
 
@@ -149,35 +151,6 @@ class CreateFoodListing extends Component
     $this->reset(['latitude', 'longitude', 'searchName']);
 
 }
-// protected function sendFoodListingCreatedEmail($foodListing)
-// {
-//     $users = User::all(); // Retrieve all users or a subset as needed.
-
-//     foreach ($users as $user) {
-//         $details = [
-//             'email' => $user->email,
-//             'subject' => 'New Food Listing: ' ,
-//             'title' => 'A new food listing has been posted!',
-//             'body' => 'Check out the new food listing named ',
-//             'url' => 'https://final_projects.test/dashboard',  
-//             'footer' => 'Team Food Sharing App',
-
-//         ];
-
-//         Mail::to($user->email)->queue(new FoodPosted($details));
-
-//         // Optionally save the email notification to the database
-     
-//         $notification = new EmailNotification();
-
-//         $notification->user_id = Auth::id();
-//         $notification->food_listing_id = $foodListing->id;
-//         $notification->is_read = false;
-//         $notification->subject = $details['subject'];
-//         $notification->email_body = $details['body'];
-//         $notification->save();
-//     }
-// }
 
 protected function sendFoodListingCreatedEmail($foodListing)
 {
@@ -210,34 +183,18 @@ protected function sendFoodListingCreatedEmail($foodListing)
     }
 }
 
-// protected function sendFoodListingCreatedEmail($foodListing)
-// {
-//     $users = User::all();
 
-//     foreach ($users as $user) {
-//         $emailSubject = 'New Food Listing: ' . ($foodListing->name ?? 'Unnamed Listing');
-//         $details = [
-//             'email' => $user->email,
-//             'name' => $user->first_name, // or 'name' => $user->name,
-//             'subject' => $emailSubject,
-//             'title' => 'A new food listing has been posted!',
-//             'body' => 'We are excited to announce we have a new food listing named ' . ($foodListing->name ?? 'Unnamed Listing'),
-//             'url' => 'https://final_projects.test/dashboard',
-//             'footer' => 'Team Food Sharing App',
-//         ];
-        
+public function updateInputValue($inputId, $value) {
+    if ($inputId === 'allergen-input') {
+        $this->allergen = $value;
+    } elseif ($inputId === 'name-input') {
+        $this->name = $value;
+    } elseif ($inputId === 'ingredients-input') {
+        $this->ingredients = $value;
+    } elseif ($inputId === 'description-input') {
+        $this->description = $value;
+    }
+}
 
-//         Mail::to($user->email)->queue(new FoodPosted($details));
-
-//         // Save the notification to the database
-//         $notification = new EmailNotification();
-//         $notification->user_id = $user->id;
-//         $notification->food_listing_id = $foodListing->id;
-//         $notification->is_read = false;
-//         $notification->subject = $emailSubject;  // Correctly use the defined $emailSubject
-//         $notification->email_body = $details['body'];
-//         $notification->save();
-//     }
-// }
 
 }

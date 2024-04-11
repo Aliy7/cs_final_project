@@ -1,0 +1,30 @@
+What do I need to fill out when uploading a new food listing?
+Ensure you fill in all the necessary details like food name, description, category, price, and availability.
+Why do I need to add a picture when listing food?
+Adding a picture lets you see the food before reserving it. It helps you choose better and makes your browsing experience more enjoyable.
+How many food items do I need to post?
+You need to post more than one food item so that there are plenty of options for everyone.
+What should I include about allergens?
+It's important to mention any allergens in the food to help people with dietary restrictions make safe choices.
+Why do I need to mention the location of the food?
+Mentioning the location helps you know how close the food is to your location. It makes it easier to plan for picking it up.
+How do I show that the food is available for reservation?
+Just tick the availability checkbox to let others know that the food is ready to be reserved.
+How do I finish uploading my food listing?
+Once you've filled in all the necessary fields and ticked the availability checkbox, click the "Upload Food Listing" button to submit it.
+FAQ: How to Reserve Listed Food
+Do I need approval before reserving the listed food?
+Yes, our team needs to approve your application before you can reserve any listed food items.
+How long does it take for my application to be approved?
+Our team usually takes one to three working days to review and approve your application. We'll email you once it's approved.
+What happens after I reserve a listed food item?
+Once our team approves your reservation, you can go ahead and collect the food from the location mentioned in the listing.
+FAQ: Profile Updates
+How can I change my profile information?
+You can update your profile on the "My Update" page. There, you can edit and save any changes to your information.
+FAQ: Contacting Us
+How do I get in touch with your team?
+Just click on the footer at the bottom of the screen and select the option to contact us. Fill in the required fields in the form and click "Submit" to send your message.
+FAQ: Updating Password
+How can I change my password?
+If you need to update your password, go to the login page and click on "Forgot Password." Follow the instructions in the email notification you receive to reset your password securely.

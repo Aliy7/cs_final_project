@@ -4,19 +4,20 @@
     <form wire:submit.prevent="store" class="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow">
         <h2 class="text-2xl font-semibold text-center mb-6">Create Food Listing</h2>
        
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-            <input wire:model="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Food Name">
+         <!-- Name Input -->
+         <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+            <input wire:model="name" id="name-input" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Food Name">
+            <ul id="name-suggestions" class="absolute z-10 list-disc bg-white border mt-1 hidden"></ul>
             @error('name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
-
-        {{-- Ingredients Input --}}
+        <!-- Ingredients Input -->
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Ingredients</label>
-            <input wire:model="ingredients" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Ingredients">
+            <label for="ingredients" class="block text-gray-700 text-sm font-bold mb-2">Ingredients</label>
+            <input wire:model="ingredients" id="ingredients-input" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ingredients">
+            <ul id="ingredients-suggestions" class="absolute z-10 list-disc bg-white border mt-1 hidden"></ul>
             @error('ingredients') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
-
         {{-- Quantity Dropdown --}}
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Quantity</label>
@@ -28,19 +29,21 @@
             @error('quantity') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
 
-        {{-- Allergen Info Input --}}
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Allergen Info</label>
-            <input wire:model="allergen" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Allergen Info">
+         <!-- Allergen Info Input -->
+         <div class="mb-4">
+            <label for="allergen" class="block text-gray-700 text-sm font-bold mb-2">Allergen Info</label>
+            <input wire:model="allergen" id="allergen-input" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Allergen Info">
+            <ul id="allergen-suggestions" class="absolute z-10 list-disc bg-white border mt-1 hidden"></ul>
             @error('allergen') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
 
-        {{-- Description Input --}}
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
-            <textarea wire:model="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Description"></textarea>
-            @error('description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-        </div>
+     <!-- Description Input -->
+     <div class="mb-4">
+        <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+        <textarea wire:model="description" id="description-input" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Description"></textarea>
+        <ul id="description-suggestions" class="absolute z-10 list-disc bg-white border mt-1 hidden"></ul>
+        @error('description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+    </div>
 
         {{-- Status Checkbox --}}
         <div class="mb-4">
@@ -59,13 +62,7 @@
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
-            
-            {{-- <select wire:model="category_id" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                <option value="">Select a Category</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select> --}}
+          
             @error('category_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
 
@@ -120,20 +117,94 @@
     </form>
 </div>
 
- 
-{{-- <script>
-document.addEventListener('livewire:load', function () {
-    // Listen for a specific Livewire event
-    window.livewire.on('locationSaved', () => {
-        // Clear the input fields after successful submission by Livewire
-        document.getElementById('address-input').value = ''; // Clear the search address field
-        document.getElementById('address-latitude').value = ''; // Clear the latitude field
-        document.getElementById('address-longitude').value = ''; // Clear the longitude field
-    });
-
-    // You might also want to hook into the form submission event to perform an action
-    window.livewire.on('submitLocation', () => {
-        // Actions to take before Livewire submits the form
-    });
-});
-</script>  --}}
+     <script>
+        // Global timeout reference
+        let hideSuggestionsTimeout;
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            setupAutocomplete('foodNames', 'name-input', 'name-suggestions');
+            setupAutocomplete('foodIngredients', 'ingredients-input', 'ingredients-suggestions');
+            setupAutocomplete('description', 'description-input', 'description-suggestions');
+            setupAutocomplete('allergens', 'allergen-input', 'allergen-suggestions');
+    
+            // Add event listener to clear suggestions when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.matches('#name-input, #ingredients-input, #description-input, #allergen-input')) {
+                    clearAllSuggestions();
+                }
+            });
+        });
+    
+        function setupAutocomplete(endpoint, inputId, suggestionsId) {
+            const inputElement = document.getElementById(inputId);
+            inputElement.addEventListener('input', () => {
+                // Clear the timeout each time the input is modified
+                clearTimeout(hideSuggestionsTimeout);
+                fetchAutocompleteSuggestions(inputElement.value, endpoint, inputId, suggestionsId);
+            });
+        }
+    
+        function fetchAutocompleteSuggestions(query, endpoint, inputId, suggestionsId) {
+            if (query.length < 2) {
+                clearSuggestions(suggestionsId);
+                return;
+            }
+    
+            const searchUrl = `https://foodsharing.io/api/autocomplete/${endpoint}?q=${encodeURIComponent(query)}`;
+    
+            fetch(searchUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(suggestions => {
+                    displaySuggestions(suggestions, inputId, suggestionsId);
+                })
+                .catch(error => {
+                    console.error('Error fetching autocomplete suggestions:', error);
+                    clearSuggestions(suggestionsId);
+                });
+        }
+    
+        function displaySuggestions(suggestions, inputId, suggestionsId) {
+            const suggestionsElement = document.getElementById(suggestionsId);
+            clearSuggestions(suggestionsId);
+    
+            if (suggestions.length > 0) {
+                suggestionsElement.classList.remove('hidden');
+            }
+    
+            suggestions.forEach(suggestion => {
+                const listItem = document.createElement('li');
+                listItem.textContent = suggestion;
+                listItem.className = 'p-2 cursor-pointer hover:bg-gray-200';
+                listItem.addEventListener('click', function() {
+                    const targetInput = document.getElementById(inputId);
+                    targetInput.value = this.textContent;
+                    targetInput.dispatchEvent(new Event('input'));
+                    clearSuggestions(suggestionsId);
+                });
+                suggestionsElement.appendChild(listItem);
+            });
+    
+            // Set a new timeout to hide suggestions after 5 seconds
+            hideSuggestionsTimeout = setTimeout(() => {
+                clearSuggestions(suggestionsId);
+            }, 5000);
+        }
+    
+        function clearSuggestions(suggestionsId) {
+            const suggestionsElement = document.getElementById(suggestionsId);
+            if (suggestionsElement) {
+                suggestionsElement.innerHTML = '';
+                suggestionsElement.classList.add('hidden');
+            }
+        }
+    
+        function clearAllSuggestions() {
+            ['name-suggestions', 'ingredients-suggestions', 'description-suggestions', 'allergen-suggestions'].forEach(clearSuggestions);
+        }
+    </script>
+    

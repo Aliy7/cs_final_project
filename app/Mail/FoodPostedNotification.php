@@ -62,14 +62,6 @@ class FoodPostedNotification extends Mailable implements ShouldQueue
         ->subject($this->details['subject'])
         ->markdown('emails.email-sender', ['details' => $this->details]);
     }
-    // public function build()
-    // {
-    //     return $this
-    //     ->from('food-sharing@app.com')
-    //     ->to('customer@gmail.com')
-    //     ->subject('Food has been listed')
-    //     // ->attachFromStorage('images/images.png')
-    //     ->markdown('emails.email-sender');
-    // }
+  
 
 }

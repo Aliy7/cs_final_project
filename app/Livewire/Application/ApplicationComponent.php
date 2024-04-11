@@ -21,17 +21,44 @@ class ApplicationComponent extends Component
     public $address_id;
     public $is_student;
     public $addresses = []; 
-    public $street, $city, $state, $postalCode, $country;
+    public $street, $city, $county, $postcode, $country;
 
+    protected $listeners = ["addressUpdated" => '$addressUpdated',
+                              'inputValueUpdated' => 'updateInputValue'];
 
+ 
+
+    public function updateInputValue($inputId, $value) {
+        if ($inputId === 'city-input') {
+            $this->city = $value;
+        } elseif ($inputId === 'county-input') {
+            $this->county = $value;
+        } elseif ($inputId === 'country-input') {
+            $this->country = $value;
+        }
+    }
+    public function onAddressUpdate($address)
+    {
+        $this->street = $address['street'] ?? '';
+        $this->city = $address['city'] ?? '';
+        $this->county = $address['county'] ?? '';
+        $this->postcode = $address['postcode'] ?? '';
+        $this->country = $address['country'] ?? '';
+    }
+    public function mount()
+    {
+        $user = Auth::user(); 
+        $this->name = $user->first_name . ' ' . $user->last_name;
+    }
+    
     protected $rules = [
         'family_income' => 'required|numeric',
-        'name' => 'required|string|max:255',
+        'name' => 'required|string|max:25',
         'is_student' => 'required|boolean',
         'street' => 'required|string|max:255',
         'city' => 'required|string|max:255',
-        'state' => 'required|string|max:255',
-        'postalCode' => 'required|string|max:255',
+        'county' => 'required|string|max:255',
+        'postcode' => 'required|string|max:255',
         'country' => 'required|string|max:255',
     ];
     
@@ -54,10 +81,10 @@ public function submit()
 
     // Create an Address record first using a more verbose but consistent approach
     $address = new Address();
-    $address->street_name = $this->street;
+    $address->street = $this->street;
     $address->city = $this->city;
-    $address->state = $this->state;
-    $address->postcode = $this->postalCode;
+    $address->county = $this->county;
+    $address->postcode = $this->postcode;
     $address->country = $this->country;
     $address->user_id = Auth::id();
 
@@ -67,7 +94,7 @@ public function submit()
     $application = new Application();
     $application->user_id = Auth::id();
     $application->family_income = $this->family_income;
-    $application->name = $this->name;
+    $application->name = Auth::user()->first_name . ' ' . Auth::user()->last_name;
     $application->address_id = $address->id;
     $application->is_student = $this->is_student;
 
@@ -142,10 +169,4 @@ protected function storeNotification($application, $subject, $body) {
     $notification->save();
 }
 
-
-
 }
-
-
-// }
-

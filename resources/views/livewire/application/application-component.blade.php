@@ -16,52 +16,59 @@
         
         <!-- Family Income -->
         <div class="mb-4">
-            <label for="family_income" class="block text-sm font-medium text-gray-700">Family Income</label>
-            <input wire:model="family_income" id="family_income" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            <label for="family_income" class="font-bold text-gray-700">Family Income</label>
+            <input wire:model="family_income" placeholder="Only Number Allowed" id="family_income" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring 
+             focus:ring-indigo-500 focus:ring-opacity-50 placeholde">
             @error('family_income') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
         </div>
+<div class="mb-4">
+    <label for="name" class="font-medium text-gray-700">Name is Entered for you: No need to update</label>
+    <div id="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
+        {{ $name }}
+    </div>
+    @error('name') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+</div>
 
-        <!-- Name -->
-        <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-            <input wire:model="name" id="name" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-            @error('name') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
-        </div>
+
 
         <!-- Street -->
         <div class="mb-4">
-            <label for="street" class="block text-sm font-medium text-gray-700">Street</label>
-            <input wire:model="street" id="street" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            <label for="street" class=" font-bold text-gray-700">Street</label>
+            <input wire:model="street" placeholder="Street name here..." id="street" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
             @error('street') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
         </div>
 
-        <!-- City -->
-        <div class="mb-4">
-            <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-            <input wire:model="city" id="city" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-            @error('city') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
-        </div>
+<!-- City Input -->
+<div class="mb-4">
+    <label for="city" class=" align-content-center font-bold text-gray-700">City</label>
+    <input wire:model="city" placeholder="City name here.." id="city-input" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" autocomplete="off">
+    <ul id="city-suggestions" class="absolute z-10 list-disc bg-white border mt-1 hidden"></ul>
+    @error('city') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+</div>
 
-        <!-- State -->
-        <div class="mb-4">
-            <label for="state" class="block text-sm font-medium text-gray-700">State</label>
-            <input wire:model="state" id="state" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-            @error('state') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
-        </div>
+<!-- County Input -->
+<div class="mb-4">
+    <label for="county" class=" font-bold text-gray-700">County</label>
+    <input wire:model="county" placeholder="Your county here .." id="county-input" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" autocomplete="off">
+    <ul id="county-suggestions" class="absolute z-10 list-disc bg-white border mt-1 hidden"></ul>
+    @error('county') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+</div>
 
         <!-- Postal Code -->
         <div class="mb-4">
-            <label for="postalCode" class="block text-sm font-medium text-gray-700">Postal Code</label>
-            <input wire:model="postalCode" id="postalCode" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-            @error('postalCode') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+            <label for="postcode" class=" font-bold text-gray-700">Postal Code</label>
+            <input wire:model="postcode" placeholder="Post code here..." id="postcode" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            @error('postalcode') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
         </div>
 
-        <!-- Country -->
-        <div class="mb-4">
-            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-            <input wire:model="country" id="country" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-            @error('country') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
-        </div>
+
+<div class="mb-4">
+    <label for="country" class="font-bold text-gray-700">Country</label>
+    <input wire:model="country" placeholder="your country here..." id="country-input" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" autocomplete="off">
+    <ul id="country-suggestions" class="absolute z-10 list-disc bg-white border mt-1 hidden"></ul>
+    @error('country') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+</div>
+
 
         <!-- Is Student -->
         <div class="mb-6">
@@ -79,3 +86,93 @@
         </div>
     </form>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setupAutocomplete('cities', 'city-input', 'city-suggestions');
+        setupAutocomplete('counties', 'county-input', 'county-suggestions');
+        setupAutocomplete('countries', 'country-input', 'country-suggestions');
+        document.addEventListener('click', function(event) {
+            if (!event.target.matches('#city-input') && !event.target.matches('#county-input') && !event.target.matches('#country-input')) {
+                clearAllSuggestions();
+            }
+        });
+    });
+
+    function setupAutocomplete(endpoint, inputId, suggestionsId) {
+        const inputElement = document.getElementById(inputId);
+        inputElement.addEventListener('input', () => {
+            fetchAutocompleteSuggestions(inputElement.value, endpoint, inputId, suggestionsId);
+        });
+    }
+
+    function fetchAutocompleteSuggestions(query, endpoint, inputId, suggestionsId) {
+        if (query.length < 2) {
+            clearSuggestions(suggestionsId);
+            return;
+        }
+
+        const searchUrl = `https://foodsharing.io/api/autocomplete/${endpoint}?q=${encodeURIComponent(query)}`;
+
+
+        fetch(searchUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(suggestions => {
+                displaySuggestions(suggestions, inputId, suggestionsId);
+            })
+            .catch(error => {
+                console.error('Error fetching autocomplete suggestions:', error);
+                clearSuggestions(suggestionsId);
+            });
+    }
+
+    let hideSuggestionsTimeout;
+
+function displaySuggestions(suggestions, inputId, suggestionsId) {
+    const suggestionsElement = document.getElementById(suggestionsId);
+    clearSuggestions(suggestionsId);
+
+    if (suggestions.length > 0) {
+        suggestionsElement.classList.remove('hidden');
+    }
+
+    suggestions.forEach(suggestion => {
+        const listItem = document.createElement('li');
+        listItem.textContent = suggestion;
+        listItem.className = 'p-2 cursor-pointer hover:bg-gray-200';
+        listItem.addEventListener('click', function() {
+            const targetInput = document.getElementById(inputId);
+            targetInput.value = this.textContent;
+            targetInput.dispatchEvent(new Event('input'));
+            clearSuggestions(suggestionsId);
+        });
+        suggestionsElement.appendChild(listItem);
+    });
+
+    clearTimeout(hideSuggestionsTimeout);
+
+    hideSuggestionsTimeout = setTimeout(() => {
+        clearSuggestions(suggestionsId);
+    }, 10000);
+}
+
+
+    function clearSuggestions(suggestionsId) {
+        const suggestionsElement = document.getElementById(suggestionsId);
+        if (suggestionsElement) {
+            suggestionsElement.innerHTML = '';
+            suggestionsElement.classList.add('hidden');
+        }
+    }
+
+    function clearAllSuggestions() {
+    ['city-suggestions', 'county-suggestions', 'country-suggestions'].forEach(suggestionsId => {
+        clearSuggestions(suggestionsId);
+    });
+}
+
+</script>

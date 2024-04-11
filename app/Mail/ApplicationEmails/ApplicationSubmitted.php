@@ -22,14 +22,6 @@ class ApplicationSubmitted extends Mailable implements ShouldQueue
         $this->details = $details;
     }
 
-    // public function build()
-    // {
-    //                 return $this->from('share-me@app.com')
-    //                 ->to($this->application->user->email)
-    //                 ->subject('Application Submitted')
-    //                 ->markdown('emails.app-submitted', ['application' => $this->application]);
-    
-    // }
     public function build() {
         return $this
             ->from('share-me@app.com')

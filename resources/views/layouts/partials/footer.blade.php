@@ -4,16 +4,13 @@
             <span class="text-lg font-bold text-white">© 2023 <a href="https://flowbite.com/" class="hover:underline">ShareMe™</a> All Rights Reserved.</span>
             <ul class="flex items-center font-bold  text-sm font-medium text-white">
                 <li>
-                    <a href="#" class="hover:underline mx-2">About</a>
+                    <a href="{{route('showHelp-page')}}" class="hover:underline mx-2">Help Page</a>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline mx-2">Privacy Policy</a>
+                    <a href="{{route('privacy-policy')}}" class="hover:underline mx-2">Privacy Policy</a>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline mx-2">Licensing</a>
-                </li>
-                <li>
-                    <a href="#" class="hover:underline mx-2">Contact</a>
+                    <a href="{{ route('contactUs-email') }}" class="hover:underline mx-2">Contact</a>
                 </li>
             </ul>
         </div>

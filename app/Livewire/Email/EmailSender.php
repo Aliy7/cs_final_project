@@ -37,15 +37,23 @@ class EmailSender extends Component
     
         $userId = auth()->id();
 
-        // Alternatively, if $this->userId is set to the target user's ID
-        // $userId = $this->userId;
+    //      // Fetch the food listing based on provided ID
+    // $foodListing = FoodListing::find($this->foodListingId);
+    // if (!$foodListing) {
+    //     session()->flash('error', 'Invalid Food Listing.');
+    //     return;
+    // }
+    //     // Calculate the available quantity if needed, or use a predefined quantity
+    // $availableQuantity = $this->foodQuantity ?? $foodListing->available_quantity;
+
+    // // Find users with the lowest income who are eligible to receive the email
+    // $selectedUsers = $this->findUserWithLowestIncome($availableQuantity);
     
         $users = User::all();
       
         foreach($users as $user){
         $details = [
-            // 'subject' => $this->subject,
-            // 'body' => $this->body,
+           
             'name' => $user->first_name ?? 'Valued User', 
 
             'email' => $user->email,            
@@ -72,5 +80,22 @@ class EmailSender extends Component
         session()->flash('message', 'Email sent and notification saved successfully!');
         $this->reset(['email', 'subject', 'body', 'userId', 'foodListingId']);
     }
+
+    public function findUserWithLowestIncome($quantity) {
+        // Fetch users who are admins or have approved applications
+        return User::select('users.*')
+                   ->leftJoin('applications', 'applications.user_id', '=', 'users.id')
+                   ->leftJoin('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+                   ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                   ->where('roles.name', '=', 'admin')
+                   ->orWhere(function ($query) {
+                       $query->where('applications.status', '=', 'approved');
+                   })
+                   ->orderBy('applications.family_income', 'asc')
+                   ->orderByRaw('RAND()')
+                   ->take($quantity)
+                   ->get();
+    }
+    
 
 }

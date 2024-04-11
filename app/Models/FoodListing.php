@@ -33,10 +33,6 @@ class FoodListing extends Model
         return $this->hasOne(Location::class, 'food_listing_id', 'id');
     }
 
-    public function ratings()
-    {
-        return $this->hasMany(Rating::class);
-    }
 
     public function category()
     {

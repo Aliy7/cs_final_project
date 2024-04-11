@@ -34,12 +34,14 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'username' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:50', 'unique:' .User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'first_name' => ['required', 'string', 'max:30'],
+            'last_name' => ['required', 'string', 'max:30'],
+            'phone_number' => ['required', 'string', 'max:15'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()->min(12)
+                                                                                ->mixedCase()
+                                                                                ->symbols(2),]
         ]);
 
         $user = User::create([
@@ -52,16 +54,25 @@ class RegisteredUserController extends Controller
             
         ]);
 
-        // After creating the user
-    //   $defaultRole = Role::where('name', 'USER')->first(); 
-    //   $user->roles()->attach($defaultRole);
-
-
         event(new Registered($user));
         Mail::to($user->email)->send(new UserRegEmail($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('verification.notice');
+
+    }
+
+    public function uniqueUserName(Request $request){
+     
+        $request->validate([
+            'username' => 'required|string|max:50',
+        ]);
+
+        $isUnique = !User::where('username', $request->input('username'))->exists();
+
+        return response()->json(['isUnique' => $isUnique]);
+        
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
     use Notifiable;
@@ -60,19 +62,23 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class);
     }
 
-    // User model
-public function application()
-{
-    return $this->hasOne(Application::class); 
-}
-
-public function notifications()
-{
-    return $this->hasMany(EmailNotification::class);
-}
-
-public function routeNotificationForVonage(): string
+    public function application()
     {
-        return $this->phone_number;
+        return $this->hasOne(Application::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(EmailNotification::class);
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    public function helpContents()
+    {
+        return $this->hasMany(HelpContent::class);
     }
 }

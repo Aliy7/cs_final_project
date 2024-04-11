@@ -8,6 +8,7 @@ use Livewire\Component;
 class ShowProfile extends Component
 {
 
+    public $profileId;
     public $profile;
     public function render()
     {
@@ -15,14 +16,14 @@ class ShowProfile extends Component
             'profile' => $this->profile,
         ])->layout('livewire.app.app-layout');
     }
-
+    
     public function mount($profileId)
     {
-        $this->profile = Profile::with('user')->find($profileId);
+        $this->profileId = $profileId; 
+        $this->profile = Profile::where('user_id', $profileId)->first();
+        
     
-        if (!$this->profile) {
-            abort(404, 'This is Profile not found');
-        }
     }
+    
     
 }
