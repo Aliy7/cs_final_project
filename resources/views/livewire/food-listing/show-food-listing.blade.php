@@ -17,12 +17,10 @@
                                   
                                     <div class="text-sm">{{ $listing->created_at->diffForHumans() }}</div>
                                 </div>
-                                {{-- <div class="shrink-0">
-                                    @livewire('edit-delete.edit-delete-component', ['foodListingId' => $listing->id], key('-component-' . $listing->id))
-                                </div> --}}
-                                <div class="shrink-0">
-                                    @livewire('edit-delete.edit-delete-component', ['foodListingId' => $listing->id], key('edit-delete-component-' . $listing->id))
-                                </div>
+                              
+                                 <div class="shrink-0">
+        @livewire('edit-delete.edit-delete-component', ['foodListingId' => $listing->id], key('edit-delete-component-' . $listing->id))
+    </div>
                             </div>
                            <!-- Image Container -->
                            <div class="image-section" style="width: 100%; display: block;">

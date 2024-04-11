@@ -44,27 +44,12 @@ $this->deleteModal = true;
 $this->editModal = false;
 $this->loadFoodListing();
 }
-
-public function showDeleteConfirmation($foodListingId) {
-    $this->foodListingId = $foodListingId;
-    $this->deleteModal = true; 
-}
-
-public function hideDeleteConfirmation() {
-    $this->deleteModal = false; 
-}
-
 public function confirmDeletion()
 {
     if ($this->foodListingId) {
         $this->deleteFoodListing();
         $this->closeModal();
-
-        session()->flash('message', 'Food listing deleted successfully.');
-        $this->hideDeleteConfirmation(); // Hide the confirmation modal
-        $this->dispatch('foodListingDeleted', $this->foodListingId);
-
-        $this->isOpen = false;
+        $this->dispatch('confirmDeletion', $this->foodListingId);
 
     }
 }
