@@ -1,11 +1,9 @@
 <?php
+
 namespace App\Livewire\reserve;
 
-
 use Livewire\Component;
-use App\Models\FoodListing;
 use App\Models\Reservation;
-use Livewire\WithPagination;
 use App\Models\EmailNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -13,9 +11,7 @@ use App\Mail\ApprovedReservationEmail;
 
 class ShowReservation extends Component
 {
-    
-
-public $reservations;
+    public $reservations;
 
     public function mount()
     {
@@ -30,15 +26,30 @@ public $reservations;
             $reservation->status = $newStatus;
             $reservation->save();
 
-            // Trigger notification if the new status is 'approved' and the previous status was not 'approved'
             if ($newStatus === 'approved' && $previousStatus !== 'approved') {
                 $this->reservationNotifications($reservation);
             }
 
-        // Refresh the list manually after an update
+            $this->reservations = $this->queryReservations()->get();
+        }
+    }
+    public function markAsCollected($reservationId, $value)
+    {
+        if (!Auth::user()->hasRole('admin')) {
+            session()->flash('error', 'Unauthorized action.');
+            return;
+        }
+
+        $reservation = Reservation::findOrFail($reservationId);
+        $reservation->hasCollected = $value === '1'; // '1' for Yes, '0' for No
+        $reservation->save();
+
+        session()->flash('success', 'Collection status updated to ' . ($value === '1' ? 'Yes' : 'No') . '.');
+
+        // Refresh the list of reservations
         $this->reservations = $this->queryReservations()->get();
     }
-    }
+
     protected function queryReservations()
     {
         return Reservation::with(['user', 'foodListing'])
@@ -55,7 +66,7 @@ public $reservations;
         ])->layout('livewire.app.app-layout');
     }
 
-    
+
     public function reservationNotifications($reservation)
     {
 
