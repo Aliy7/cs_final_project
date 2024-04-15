@@ -37,4 +37,15 @@
             </form>
         </div>
     </div>
+     <!-- Load help content from database -->
+     <div class="mt-10">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Existing Help Content</h3>
+        @foreach ($helpContents as $content)
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-4">
+                <h4 class="text-xl font-bold text-gray-900 dark:text-white">{{ $content->title }}</h4>
+                <p class="text-gray-600 dark:text-gray-400">{{ $content->content }}</p>
+                <small class="text-sm text-gray-500">Category: {{ $content->category }}</small>
+            </div>
+        @endforeach
+    </div>
 </section>

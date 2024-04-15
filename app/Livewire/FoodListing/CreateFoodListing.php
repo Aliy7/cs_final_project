@@ -166,7 +166,8 @@ protected function sendFoodListingCreatedEmail($foodListing)
             'subject' => $emailSubject,
             'title' => 'A new food listing has been posted!',
             'body' => 'We are excited to announce we have a new food listing named ' . ($foodListing->name ?? 'Unnamed Listing'),
-            'url' => 'https://final_projects.test/dashboard',  
+            'url' => url('/dashboard'),
+ 
             'footer' => 'Team Food Sharing App',
         ];
 

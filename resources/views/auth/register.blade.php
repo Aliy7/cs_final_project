@@ -2,14 +2,14 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <h1 class="text-3xl font-bold ">Fill user details in the form</h1>
+        <h1 class="text-3xl font-bold">Fill user details in the form</h1>
         <hr class="h-1 bg-gray-300 border-0">
         <!-- Name -->
         <div>
             <label for="username" class=" font-bold text-gray-700">User Name</label>
             <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" placeholder="User Name here" required autofocus autocomplete="username" maxlength="15" />
             <x-input-error :messages="$errors->get('username')" class="mt-2" />
-                <div id="usernameError" class="text-red-500 text-sm hidden"></div>  
+            <div id="usernameError" class="text-red-500 text-sm hidden"></div>  
         </div>
 
         <!-- Email Address -->
@@ -40,29 +40,7 @@
             <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
             <div id="phoneNumberError" class="text-red-500 text-sm hidden"></div>  
         </div>
-      {{-- <!-- Password -->
-      <div class="mt-4">
-        <label for="password" class=" font-bold text-gray-700">Password</label>
 
-        <x-text-input id="password" class="block mt-1 w-full" placeHolder="Enter password"
-                        type="password"
-                        name="password"
-                        required autocomplete="new-password" />
-
-        <x-input-error :messages="$errors->get('password')" class="mt-2" />
-    </div>
-
-    <!-- Confirm Password -->
-    <div class="mt-4">
-        <label for="password_confirmation" class=" font-bold text-gray-700">Repeat Password</label>
-
-
-        <x-text-input id="password_confirmation" class="block mt-1 w-full" placeHolder="Repeat Password" 
-                        type="password"
-                        name="password_confirmation" required autocomplete="new-password" />
-
-        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-    </div> --}}
 <!-- Password -->
 <div class="mt-4">
     <label for="password" class="font-bold text-gray-700">Password</label>

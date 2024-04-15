@@ -17,18 +17,8 @@
 
      @livewireStyles
      
-     <style>
-        .navbar-welcome {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            z-index: 100;
-            background: #FFF;
-        }
-    </style>
- <body class="welcome-page">
+
+ <body class="flex flex-col min-h-screen">
 
      <section class="mb-40">
          <!-- Navbar -->
@@ -184,13 +174,13 @@ Login
             </div>
         </div>
         
-         <!-- Jumbotron -->
+        
      </section>
-     <!-- Navbar -->
+    
 
 
      </div>
-     <footer class="bg-sky-400 text-white px-4 py-6 w-full relative inset-x-0 bottom-0">
+     <footer class="bg-sky-400 text-white px-4 py-6 w-full fixed inset-x-0 bottom-0">
         <div class="flex flex-wrap justify-between items-center max-w-screen-xl mx-auto">
             <span class=" text-2xl text-black font-extralight">© <span id="year"></span> Food Sharing App. All Rights Reserved.</span>
             <ul class="flex flex-wrap items-center mt-3 text-sm">
@@ -212,6 +202,7 @@ Login
     </script>
     
      @livewireScriptConfig
+     @livewireStyles
      <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 
 

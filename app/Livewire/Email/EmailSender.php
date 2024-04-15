@@ -60,7 +60,7 @@ class EmailSender extends Component
             'subject' => $this->subject,
             'title' => 'Check out food has been listed',  // Example title
             'body' => $this->body,  // The body content from the form
-            'url' => 'https://final_projects.test/dashboard',  // Example URL
+            'url' => '/dashboard',  // Example URL
             'footer' => 'Team Food Sharing App',
         ];
     

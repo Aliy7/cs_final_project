@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class HelpContentManager extends Component
 {
-    public $title;
-    public $content;
-    public $category;
+    protected $title;
+    protected $content;
+    protected $category;
+    protected $helpContent;
 
     public function render()
     {
@@ -38,7 +39,12 @@ class HelpContentManager extends Component
 
         session()->flash('message', 'Help content added successfully.');
         $this->reset(['title', 'content', 'category']);
+        $this->helpContent = HelpContent::all();
+
     }
 
+    public function mount(){
+        $this->helpContent = HelpContent::all();
+    }
   
 }

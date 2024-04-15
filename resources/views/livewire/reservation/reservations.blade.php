@@ -175,10 +175,8 @@
                                 <button @click="$wire.reserve()" class="px-4 py-2 bg-blue-500 text-white rounded-md focus:outline-none transition ease-in-out duration-150 sm:text-sm sm:leading-5">
                                     Reserve
                                 </button>
-                            </div>
-                            
-                            
-                            
+                            </div>                            
+                                          
                         </div>
                     </template>
                 </div>

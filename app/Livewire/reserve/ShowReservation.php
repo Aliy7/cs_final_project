@@ -66,8 +66,7 @@ public $reservations;
             'subject' => 'Reservation Approved',
             'title' => 'Your Reservation Has Been Approved',
             'body' => 'Please you are advised to come and collect your reservation',
-            'url' => 'https://final_projects.test/dashboard',  // Example URL
-
+            'url' => url('/dashboard'),
             'footer' => 'Thanks for using our app!'
         ];
         Mail::to($user->email)->queue(new ApprovedReservationEmail($details));
