@@ -19,11 +19,11 @@ class FoodListingFactory extends Factory
     public function definition()
     {
         // Predefined data arrays
-        $ingredients = ['Mashrooms', 'Steak', 'Salad', 'Cheese', 'Beef', 'Pizza', 'Pasta','Cheese', 'Flour', 'Water'];
+        $ingredients = ['Mashrooms', 'Steak', 'Salad', 'Cheese', 'Beef', 'Sugar','Pizza', 'Pasta','Cheese', 'Flour', 'Water'];
         $allergens = ['Nuts', 'Dairy', 'Shellfish',  'Soy', 'Gluten', 'Eggs', 'Peanuts',  'Fish', 'Sesame',
          'Mustard', 'Celery',  'Lupin',  'Mollusks', 'Sulphur Dioxide (Sulphites)' 
         ];
-        $name = ['Pizza', 'Burger', 'Steak', 'Pasta', 'Sandwich', 'Salad', 'Cheese', 'Tacos', 'Burrito',
+        $name = ['Pizza', 'Muffin', 'ChessBurger', 'Somali Rice',  'Burger', 'Steak', 'Pasta', 'Sandwich', 'Salad', 'Cheese', 'Tacos', 'Burrito',
         'Lasagna', 'Spaghetti', 'Meatloaf', 'Fried Chicken', 'Waffles', 'Pancakes', 'Macaroni and Cheese',
         'BBQ Ribs', 'Hot Dog', 'Grilled Cheese', 'Pot Pie', 'Clam Chowder', 'Bagel', 'French Fries',
         'Nachos', 'Cobb Salad', 'Reuben Sandwich', 'Potato Salad', 'Biscuits and Gravy', 'Cornbread',

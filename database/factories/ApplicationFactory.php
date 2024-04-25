@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Application;
+use App\Models\User;
 use App\Models\Address;
+use App\Models\Application;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ApplicationFactory extends Factory
 {
@@ -16,9 +17,10 @@ class ApplicationFactory extends Factory
     {
         $firstNames = ['James', 'Emma', 'William', 'Noah', 'Sophia', 'Ava', 'Logan', 'Olivia'];
         $lastNames = ['Smith', 'Martinez', 'Brown', 'Wilson', 'Miller', 'Taylor', 'Johnson', 'Wilson'];
+        $user = User::inRandomOrder()->first() ?? User::factory()->create();
 
         return [
-            'user_id' => self::$userId++,
+            'user_id' => $user->id,
             'family_income' => fake()->numberBetween(21000, 33000),
             'name' => fake()->randomElement($firstNames) . ' ' . fake()->randomElement($lastNames),
             'is_student' => fake()->boolean(),

@@ -19,13 +19,13 @@ class ProfileFactory extends Factory
     {
         $users = User::all();
         return [
-            'user_id' => fake()->unique()->numberBetween(1, $users->count()),
+            // 'user_id' => fake()->unique()->numberBetween(1, $users->count()),
+             'user_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
              'bio' => fake()->sentence,
              'phone_number' => fake()->phoneNumber,
              'date_of_birth' => fake()->date($format='Y-m-d', $max='now'),
              'image_url' => fake()->imageUrl(),
- 
-         
+
          ];   
     }
 }

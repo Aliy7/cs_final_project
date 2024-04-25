@@ -49,6 +49,7 @@
 
 
             </table>
+            
         </div>
     </div>
 </section>
@@ -63,7 +64,7 @@
             if (window.innerWidth >= 1025) {
                 sidebar.classList.add('sidebar-visible');
                 mainContainer.style.left = '240px';
-                footer.style.marginLeft = '240px';
+                footer.style.left = '0px';
                 applicationDisplay.style.left = '240px';
             } else {
                 sidebar.classList.remove('sidebar-visible');

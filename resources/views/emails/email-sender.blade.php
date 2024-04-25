@@ -11,8 +11,8 @@
 More Details
 @endcomponent
 
-{{ $details['footer'] }}
 
 Many Thanks,<br>
-Team Food Sharing App
+{{ $details['footer'] }}
+
 @endcomponent

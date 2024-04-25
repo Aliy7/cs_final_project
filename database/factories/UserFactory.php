@@ -35,7 +35,7 @@ class UserFactory extends Factory
             'last_name' => $this->faker->randomElement($lastNames),
             'phone_number' => '07' . $this->faker->numberBetween(100, 999) . $this->faker->numberBetween(1000000, 9999999), // Ensure 11 digits
             'email_verified_at' => now(),
-            'password' => Hash::make($password), // Hash the password for storage
+            'password' => Hash::make($password), 
             'remember_token' => Str::random(10),
                 // 'username' => fake()->name(),
                 // 'email' => fake()->unique()->safeEmail(),

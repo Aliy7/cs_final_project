@@ -1,5 +1,5 @@
 {{-- create-food-listing-blade is used to take user input and auto fill processing for creating of food listing --}}
-<div class="container mx-auto p-5 ">
+<div class="container mx-auto p-5">
     <form wire:submit.prevent="store" class="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow">
         <h2 class="text-2xl font-semibold text-center mb-6">Create Food Listing</h2>
 
@@ -152,7 +152,6 @@
         setupAutocomplete('description', 'description-input', 'description-suggestions');
         setupAutocomplete('allergens', 'allergen-input', 'allergen-suggestions');
 
-        // Add event listener to clear suggestions when clicking outside
         document.addEventListener('click', function(event) {
             if (!event.target.matches(
                     '#name-input, #ingredients-input, #description-input, #allergen-input')) {
@@ -164,7 +163,6 @@
     function setupAutocomplete(endpoint, inputId, suggestionsId) {
         const inputElement = document.getElementById(inputId);
         inputElement.addEventListener('input', () => {
-            // Clear the timeout each time the input is modified
             clearTimeout(hideSuggestionsTimeout);
             fetchAutocompleteSuggestions(inputElement.value, endpoint, inputId, suggestionsId);
         });

@@ -96,7 +96,7 @@ class ApplicationComponent extends Component
     {
         $this->validate();
 
-        // Prevent duplicate applications
+        // Prevent multiple applications
         if (Application::where('user_id', auth()->id())->exists()) {
             session()->flash('error', 'You have already submitted an application.');
             return redirect()->to('/dashboard');
@@ -108,7 +108,6 @@ class ApplicationComponent extends Component
             return redirect()->to('/application-form');
         }
 
-        // Create an Address record first using a more verbose but consistent approach
         $address = new Address();
         $address->street = $this->street;
         $address->city = $this->city;
@@ -127,7 +126,7 @@ class ApplicationComponent extends Component
         $application->address_id = $address->id;
         $application->is_student = $this->is_student;
 
-        // Determine application status based on family income and set messages accordingly
+        // Determine application status based on family income 
         if ($this->family_income <= 21000) {
             $application->status = 'approved';
 
@@ -141,8 +140,8 @@ class ApplicationComponent extends Component
             $this->submittedNotification($application);
             $application->save();
 
-            session()->flash('message', 'Your application has been submitted and is currently pending approval. Please wait for further instructions.');
-            return redirect()->to('/dashboard');
+            // session()->flash('message', 'Your application has been submitted and is currently pending approval. Please wait for further instructions.');
+            // return redirect()->to('/dashboard');
         }
     }
 

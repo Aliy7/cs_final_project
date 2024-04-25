@@ -281,7 +281,7 @@
             if (window.innerWidth >= 1025) {
                 sidebar.classList.add('sidebar-visible');
                 mainContainer.classList.add('expanded');
-                dashboardContent.style.left = '150px';
+                dashboardContent.style.left = '240px';
                 dashboardContent.style.right = '0px';
 
 

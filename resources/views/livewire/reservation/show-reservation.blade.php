@@ -90,19 +90,21 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const adjustLayoutForWindowSize = () => {
+
         const sidebar = document.getElementById('logo-sidebar');
         const mainContainer = document.querySelector('.main-container');
         const reservationContent = document.querySelector('.reservation-content');
         const footer = document.querySelector('footer');
       
-        function adjustLayoutForWindowSize() {
+      
           if (window.innerWidth >= 1025) {
             // Ensure sidebar is visible and adjust the layout accordingly
             sidebar.classList.add('sidebar-visible');
-            mainContainer.style.marginLeft = '240px';
+            mainContainer.style.left = '240px';
             reservationContent.style.left = '240px'; 
-            reservationContent.style.width = 'calc(100% - 240px)'; 
-            footer.style.marginLeft = '240px';
+           // reservationContent.style.width = 'calc(100% - 240px)'; 
+            footer.style.left = '0px';
           } else { //small screen
             sidebar.classList.remove('sidebar-visible');
             mainContainer.style.marginLeft = '0';
@@ -110,9 +112,10 @@
             reservationContent.style.width = '100%'; 
             footer.style.left = '0';
             footer.style.height = '100px';
-            reservationContent.style.fontSize = '12px';
-          }
+            reservationContent.style.fontSize = '1rem';
+          
         }
+        };
     
         function adjustLogoSize() {
           var logo = document.querySelector('.logo-text');
@@ -128,9 +131,7 @@
         adjustLayoutForWindowSize();
         adjustLogoSize();
     
-        window.addEventListener('resize', function() {
-            adjustLayoutForWindowSize();
-            adjustLogoSize();
-        });
+        window.addEventListener('resize', adjustLayoutForWindowSize);
+
     });
     </script> 
