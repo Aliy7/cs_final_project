@@ -11,4 +11,6 @@ Ready for pick up
 
 {{ $details['footer'] }}
 
+Thanks,<br>
+{{ config('app.name') }}
 @endcomponent

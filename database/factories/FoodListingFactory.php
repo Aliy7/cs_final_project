@@ -54,7 +54,6 @@ class FoodListingFactory extends Factory
 
         // Get the corresponding description for the selected allergen
         $description = $descriptions[$allergen];
-        // $user = User::inRandomOrder()->first();
         $user = User::inRandomOrder()->first() ?? User::factory()->create();
         $category = Category::inRandomOrder()->first() ?? Category::factory()->create();
         return [
@@ -62,7 +61,7 @@ class FoodListingFactory extends Factory
             'ingredients' => implode(', ', fake()->randomElements($ingredients, rand(1, 3))), 
             'quantity' => fake()->randomDigitNotNull,
             'allergen' => $allergen,  
-        'description' => $description,  
+            'description' => $description,  
             'photo_url' => fake()->imageUrl(640, 480, 'food', true),
             'status' => fake()->boolean,
             'user_id' => $user->id,

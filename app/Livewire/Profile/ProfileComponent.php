@@ -8,6 +8,10 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
+/**
+ * The ProfileComponent class manages user profile information.
+ * It allows users to view, update, and manage their profile details.
+ */
 class ProfileComponent extends Component
 {
     use WithFileUploads;
@@ -22,6 +26,11 @@ class ProfileComponent extends Component
     public $user;
     public $isEditing = false;
 
+    /**
+     * Define validation rules for profile fields.
+     *
+     * @return array The validation rules.
+     */
     protected function rules()
     {
         return [
@@ -41,6 +50,13 @@ class ProfileComponent extends Component
             'image_url' => 'nullable|image|max:2048',
         ];
     }
+
+    /**
+     * Initialize the component with user data.
+     * It retrieves the authenticated user's information and populates the component's properties.
+     *
+     * @return void
+     */
     public function mount(): void
     {
         $this->user = Auth::user();
@@ -54,14 +70,28 @@ class ProfileComponent extends Component
             'date_of_birth' => $this->user->profile->date_of_birth ?? '',
         ]);
     }
+
+    /**
+     * Render the profile updating view.
+     * It renders the view for updating user profile details.
+     *
+     * @return \Illuminate\View\View The view for updating user profile.
+     */
     public function render()
     {
         return view('livewire.profile.profile-updating')
-        ->layout('livewire.app.app-layout');
+            ->layout('livewire.app.app-layout');
     }
 
+    /**
+     * Save the updated profile data.
+     * It validates the input fields, updates the user's information, and saves the profile changes.
+     *
+     * @return void
+     */
     public function save()
     {
+        // Validate the user input fields.
         $this->validate();
 
         $this->user->update([
@@ -84,16 +114,39 @@ class ProfileComponent extends Component
         $this->isEditing = false;
         $this->reset('image_url');
     }
+
+    /**
+     * Set the editing flag to true.
+     * It sets the editing flag to true to indicate 
+     * that the user is currently editing the profile.
+     *
+     * @return void
+     */
     public function isEditingNow()
     {
         $this->isEditing = true;
     }
 
+
+    /**
+     * Set the editing flag to false.
+     * It sets the editing flag to false to 
+     * indicate that the user has finished editing the profile.
+     *
+     * @return void
+     */
     public function notEditing()
     {
         $this->isEditing = false;
     }
 
+    /**
+     * Update the user's profile picture.
+     * It validates the profile picture, uploads it, and 
+     * updates the user's profile with the new picture.
+     *
+     * @return void
+     */
     public function updateProfilePicture()
     {
         $this->validate([
@@ -108,5 +161,4 @@ class ProfileComponent extends Component
 
         session()->flash('message', 'Profile picture updated successfully.');
     }
-
 }

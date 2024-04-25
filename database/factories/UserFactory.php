@@ -23,15 +23,28 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+
+        $firstNames = ['Emma', 'Liam', 'Olivia', 'Noah', 'Ava', 'William', 'Isabella', 'James', 'Sophia', 'Logan'];
+        $lastNames = ['Smith', 'Johnson', 'Brown', 'Taylor', 'Wilson', 'Martinez', 'Anderson', 'Miller', 'Davis', 'Garcia'];
+        $password = Str::random(10); 
+
         return [
-                'username' => fake()->name(),
-                'email' => fake()->unique()->safeEmail(),
-                'first_name' => fake()->name(),
-                'last_name' => fake()->name(),
-                'phone_number' => fake()->phoneNumber(),
-                'email_verified_at' => now(),
-                'password' => static::$password ??= Hash::make('password'),
-                'remember_token' => Str::random(10),
+            'username' => $this->faker->unique()->userName,
+            'email' => $this->faker->unique()->userName . '@swansea.ac.uk',
+            'first_name' => $this->faker->randomElement($firstNames),
+            'last_name' => $this->faker->randomElement($lastNames),
+            'phone_number' => '07' . $this->faker->numberBetween(100, 999) . $this->faker->numberBetween(1000000, 9999999), // Ensure 11 digits
+            'email_verified_at' => now(),
+            'password' => Hash::make($password), // Hash the password for storage
+            'remember_token' => Str::random(10),
+                // 'username' => fake()->name(),
+                // 'email' => fake()->unique()->safeEmail(),
+                // 'first_name' => fake()->name(),
+                // 'last_name' => fake()->name(),
+                // 'phone_number' => fake()->phoneNumber(),
+                // 'email_verified_at' => now(),
+                // 'password' => static::$password ??= Hash::make('password'),
+                // 'remember_token' => Str::random(10),
             ];
     }
 

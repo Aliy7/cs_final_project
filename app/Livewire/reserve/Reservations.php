@@ -20,12 +20,24 @@ class Reservations extends Component
     public $isApplicationApproved = false;
     public $previousUncollected = 5;
 
+    /**
+     * Toggles the modal visibility.
+     *
+     * @param bool $status The status to set for the modal (true for open, false for close).
+     * @return void
+     */
     public function toggleModal($status)
     {
         $this->showModal = $status;
         $this->dispatch('toggleModal', ['status' => $this->showModal]);
     }
 
+    /**
+     * Initializes the component with necessary data.
+     *
+     * @param int $food_listing_id The ID of the food listing.
+     * @return void
+     */
     public function mount($food_listing_id)
     {
         $this->food_listing_id = $food_listing_id;
@@ -34,12 +46,22 @@ class Reservations extends Component
         $this->isApplicationApproved = $user->hasRole('admin') || ($userApplication && $userApplication->status === 'approved');
     }
 
+    /**
+     * Closes the modal.
+     *
+     * @return void
+     */
     public function closeModal()
     {
         $this->showModal = false;
         $this->dispatch('modal-closed');
     }
 
+    /**
+     * Renders the component view.
+     *
+     * @return \Illuminate\View\View The view for displaying reservations.
+     */
     public function render()
     {
         $foodListings = FoodListing::all();
@@ -52,6 +74,15 @@ class Reservations extends Component
         ]);
     }
 
+    /**
+     * Handles the reservation process.
+     *
+     * This function initiates the reservation process for the user. 
+     * It checks if the user's application is approved and the maximum number of uncollected reservations.
+     * If all conditions are met, it processes the reservation by decrementing-
+     * the food listing quantity and saving the reservation details.
+     * @return void
+     */
     public function reserve()
     {
         $user = Auth::user();
@@ -79,7 +110,16 @@ class Reservations extends Component
         $this->processReservation();
     }
 
-    private function processReservation()
+    /**
+     * Process the reservation transaction.
+     *
+     * This function handles the transaction for making a reservation.
+     * It checks for existing reservations and available quantity of the food listing.
+     * If the reservation is successful, it decrements the quantity and sends notification if approved.
+     *
+     * @return void
+     */
+    public function processReservation()
     {
         DB::transaction(function () {
             $userId = Auth::id();
@@ -101,9 +141,9 @@ class Reservations extends Component
             $foodListing->decrement('quantity');
 
             // Check if the reservation is approved here and send the notification
-        if ($reservation->status === 'Approved') {
-            $this->reservationNotifications($reservation);
-        }
+            if ($reservation->status === 'Approved') {
+                $this->reservationNotifications($reservation);
+            }
             $this->dispatch('modal-message', [
                 'type' => 'success',
                 'message' => 'Your reservation has been confirmed!'
@@ -112,6 +152,4 @@ class Reservations extends Component
 
         $this->toggleModal(false);
     }
-
-
 }

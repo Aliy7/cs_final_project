@@ -2,7 +2,6 @@
 
 namespace App\Mail\ApplicationEmails;
 
-use App\Models\Application;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -10,6 +9,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * The ApplicationSubmitted class represents an email notification when an application is submitted.
+ * It extends the Mailable class and implements ShouldQueue interface for queuing.
+ */
 class ApplicationSubmitted extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
@@ -22,15 +25,16 @@ class ApplicationSubmitted extends Mailable implements ShouldQueue
         $this->details = $details;
     }
 
-    public function build() {
+    public function build()
+    {
         return $this
             ->from('share-me@app.com')
             ->to($this->details['email'])
             ->subject($this->details['subject'])
-            ->markdown('emails.app-approved', ['details' => $this->details]); // Adjust the view as needed
+            ->markdown('emails.app-approved', ['details' => $this->details]);
     }
 
-    
+
     public function envelope(): Envelope
     {
         return new Envelope(

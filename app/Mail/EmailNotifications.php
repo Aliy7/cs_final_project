@@ -10,6 +10,10 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * The EmailNotifications class represents an email notification.
+ * It extends the Mailable class and implements ShouldQueue interface for queuing.
+ */
 class EmailNotifications extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
@@ -41,7 +45,7 @@ class EmailNotifications extends Mailable implements ShouldQueue
     {
         return new Content(
             view: 'email-email-component',
-            with:['mailNotification' =>$this->mailNotification]
+            with: ['mailNotification' => $this->mailNotification]
         );
     }
 
@@ -61,8 +65,8 @@ class EmailNotifications extends Mailable implements ShouldQueue
     public function build()
     {
         $email = $this->from('hello@example.com', config('app.name'))
-                      ->subject($this->mailNotification->title)
-                      ->view('livewire.email.email-component', ['mailNotification' => $this->mailNotification]);
+            ->subject($this->mailNotification->title)
+            ->view('livewire.email.email-component', ['mailNotification' => $this->mailNotification]);
 
         if (isset($this->mailNotification->attachments)) {
             foreach ($this->mailNotification->attachments as $attachment) {
@@ -75,8 +79,4 @@ class EmailNotifications extends Mailable implements ShouldQueue
 
         return $email;
     }
-
-
-   
-
 }

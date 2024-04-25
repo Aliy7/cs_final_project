@@ -34,14 +34,14 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'username' => ['required', 'string', 'max:50', 'unique:' .User::class],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'username' => ['required', 'string', 'max:50', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'first_name' => ['required', 'string', 'max:30'],
             'last_name' => ['required', 'string', 'max:30'],
             'phone_number' => ['required', 'string', 'max:15'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()->min(12)
-                                                                                ->mixedCase()
-                                                                                ->symbols(2),]
+                ->mixedCase()
+                ->symbols(2),]
         ]);
 
         $user = User::create([
@@ -49,26 +49,22 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'phone_number' => $request -> phone_number,
+            'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
-            
+
         ]);
 
         event(new Registered($user));
         Mail::to($user->email)->send(new UserRegEmail($user));
 
         Auth::login($user);
-
-        // // return redirect(RouteServiceProvider::HOME);
-        // return redirect()->route('verification.notice');
         return redirect()->route('verification.notice')
-                 ->with('status', 'verification-link-sent');
-
-
+            ->with('status', 'verification-link-sent');
     }
 
-    public function uniqueUserName(Request $request){
-     
+    public function uniqueUserName(Request $request)
+    {
+
         $request->validate([
             'username' => 'required|string|max:50',
         ]);
@@ -76,6 +72,5 @@ class RegisteredUserController extends Controller
         $isUnique = !User::where('username', $request->input('username'))->exists();
 
         return response()->json(['isUnique' => $isUnique]);
-        
     }
 }

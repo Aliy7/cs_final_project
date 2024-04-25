@@ -19,7 +19,6 @@ return new class extends Migration
             $table->boolean('hasCollected')->default(false);
             $table->foreignId('food_listing_id')->constrained('food_listings')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

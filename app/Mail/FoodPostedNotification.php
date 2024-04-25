@@ -9,22 +9,26 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * The FoodPostedNotification class represents an email notification for posted food listings.
+ * It extends the Mailable class and implements ShouldQueue interface for queuing.
+ */
 class FoodPostedNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     public $details;
- 
+
 
     /**
      * Create a new message instance.
      */
     public function __construct($details)
     {
-        $this->details =$details;
+        $this->details = $details;
     }
 
- 
+
     /**
      * Get the message envelope.
      */
@@ -57,11 +61,9 @@ class FoodPostedNotification extends Mailable implements ShouldQueue
     public function build()
     {
         return $this
-        ->from('share-me@app.com')
-        ->to($this->details['email'])
-        ->subject($this->details['subject'])
-        ->markdown('emails.email-sender', ['details' => $this->details]);
+            ->from('share-me@app.com')
+            ->to($this->details['email'])
+            ->subject($this->details['subject'])
+            ->markdown('emails.email-sender', ['details' => $this->details]);
     }
-  
-
 }

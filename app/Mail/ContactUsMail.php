@@ -10,6 +10,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * The ContactUsMail class represents an email notification for contact us requests.
+ * It extends the Mailable class and implements ShouldQueue interface for queuing.
+ */
 class ContactUsMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
@@ -37,8 +41,6 @@ class ContactUsMail extends Mailable implements ShouldQueue
 
     public function attachments(): array
     {
-        // Assuming your Contact model might have attachments
-        // You would adjust this based on your actual attachment setup
         $attachments = [];
         if ($this->contact->attachments) {
             foreach ($this->contact->attachments as $attachment) {
@@ -54,13 +56,12 @@ class ContactUsMail extends Mailable implements ShouldQueue
         return $attachments;
     }
 
-   
-        public function build()
-        {
-            return $this
-                ->from('share-me@app.com')
-                ->subject('New Contact Us Request from ' . $this->contact->name)
-                ->markdown('emails.contact-us', ['contact' => $this->contact]);
-        }
-      
+
+    public function build()
+    {
+        return $this
+            ->from('share-me@app.com')
+            ->subject('New Contact Us Request from ' . $this->contact->name)
+            ->markdown('emails.contact-us', ['contact' => $this->contact]);
+    }
 }

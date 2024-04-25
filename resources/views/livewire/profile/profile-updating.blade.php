@@ -1,4 +1,3 @@
-
 <section class="profile-content">
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -137,7 +136,6 @@
 
                             </div>
                             <div class="flex items-center justify-end">
-                                {{-- <h1 class="font-bold alert-danger form-inline">Click here to edit profile </h1> --}}
                                 <x-primary-button wire:click="isEditingNow"
                                     class="btn-edit">{{ __(' Edit profile') }}</x-primary-button>
                             </div>
@@ -169,7 +167,6 @@
                     <livewire:profile.update-password-form />
                 </div>
             </div>
-
             <!-- Block for delete-user-form -->
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">

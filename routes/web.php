@@ -46,38 +46,33 @@ use App\Livewire\Application\ApplicationComponent;
 |
 */
 
-Route::view('/', 'welcome');
+Route::view('/', 'home');
 
-Route::get('/welcome', function(){
-    return view('welcome');
+Route::get('/home', function(){
+    return view('home');
 })->name('welcome');
 
 Route::get('/dashboard', Dashboard::class)
     ->middleware(['auth'])
     ->name('dashboard');
 
-
-// Route::get('/send-email', function() {
-//     Mail::send(new FoodPosted());
-//     return 'Email sent successfully!';
-// });
 Route::get('/send-email', EmailSender::class)->middleware(['auth'])->name('sendEmail');
 
 
 
 
 Route::get('/foodlisting', CreateFoodListing::class)
-    ->middleware(['auth']) // Make sure the user is authenticated
+    ->middleware(['auth']) 
     ->name('foodlisting');
 Route::get('/showFoodListing', ShowFoodListing::class)
-    ->middleware(['auth']) // Make sure the user is authenticated
+    ->middleware(['auth']) 
     ->name('showFoodListing');
 
     Route::post('/logout', function () {
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
-        return redirect('/welcome'); // Or wherever you wish to redirect after logout
+        return redirect('/welcome'); 
     })->name('logout');
  
     Route::get('/profile', ProfileComponent::class)->middleware(['auth'])->name('profile.profile-updating');    
@@ -89,7 +84,6 @@ Route::get('/showFoodListing', ShowFoodListing::class)
     });
 
     
-    // In routes/web.php
 
 Route::get('/google-map', function () {
     return view('googlemaps');
@@ -104,7 +98,6 @@ Route::get('/application-form', ApplicationComponent::class)->name('application-
 
 Route::get('/show-application', ShowApplications::class)->middleware(['auth'])->name('show-application');
 
-// Within routes/web.php
 
 Route::middleware(['auth'])->group(function () {
     // Auto complete routes
@@ -119,17 +112,17 @@ Route::middleware(['auth'])->group(function () {
 
     // Specific allergen description route
     Route::get('/api/allergens/description-for-allergen', [AutoCompleteController::class, 'getDescriptionForAllergen']);
+    Route::get('/help-page/create-content', HelpContentManager::class)->name('helpPage-createContent');
+
 });
 
 
-//Contact us Route
 
 
 Route::get('/contact-email', ContactForm::class)->name('contactUs-email');
 
 
 //help page Route
-
 Route::get('/help-page/create-content', HelpContentManager::class)->name('helpPage-createContent');
 Route::get('/show/help-page', ShowHelpContent::class)->name('showHelp-page');
 Route::get('/privacy-policy', PrivacyPolicy::class)->name('privacy-policy');

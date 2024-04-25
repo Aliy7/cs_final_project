@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('image_url')->nullable();
-
             $table->timestamps();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
         });

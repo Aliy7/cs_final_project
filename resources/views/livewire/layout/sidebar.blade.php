@@ -1,7 +1,5 @@
 <div class="main-container">
-    {{-- <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200"> --}}
     <nav class="fixed top-0 z-50 w-full bg-slate-800	border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-start rtl:justify-end">
@@ -17,7 +15,6 @@
                         </svg>
                     </button>
                     <a href="{{ route('dashboard') }}" class="flex ms-2 md:me-24">
-                        {{-- <img src="/storage/logo/mylogo.png" class="h-8 me-3" alt="logo" /> --}}
                         <span class="logo-text">FoodSharing</span>
                     </a>
                 </div>
@@ -62,25 +59,20 @@
                                         class="block px-4 py-2 text-sm font-bold text-black hover:bg-gray-100"
                                         role="menuitem">Dashboard</a>
                                 </li>
-                                    
-                                {{-- <li>
-                                    <a href="{{ route('profile.showProfile', ['profileId' => auth()->user()->id ?? null]) }}"
-                                       class="block px-4 py-2 text-sm font-bold text-black hover:bg-gray-100"
-                                       role="menuitem">Profile</a>
-                                </li> --}}
+
                                 <li>
-                                    @if(auth()->check())
+                                    @if (auth()->check())
                                         <a href="{{ route('profile.showProfile', ['profileId' => auth()->user()->id]) }}"
-                                           class="block px-4 py-2 text-sm font-bold text-black hover:bg-gray-100"
-                                           role="menuitem">Profile</a>
+                                            class="block px-4 py-2 text-sm font-bold text-black hover:bg-gray-100"
+                                            role="menuitem">Profile</a>
                                     @else
                                         <a href="{{ route('login') }}"
-                                           class="block px-4 py-2 text-sm font-bold text-black hover:bg-gray-100"
-                                           role="menuitem">Login</a>
+                                            class="block px-4 py-2 text-sm font-bold text-black hover:bg-gray-100"
+                                            role="menuitem">Login</a>
                                     @endif
                                 </li>
-                                
-                                
+
+
 
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
@@ -130,17 +122,20 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('foodlisting') }}"
-                        class="flex items-center p-2 text-white rounded-lg hover:bg-blue-500 group">
-                        <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 group-hover:text-teal-200"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 18 18">
-                            <path
-                                d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
-                        </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Create Listing</span>
-                        {{-- <span class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full">Pro</span> --}}
-                    </a>
+
+                    @if (auth()->user() && auth()->user()->hasRole('admin'))
+                        <a href="{{ route('foodlisting') }}"
+                            class="flex items-center p-2 text-white rounded-lg hover:bg-blue-500 group">
+                            <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 group-hover:text-teal-200"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                viewBox="0 0 18 18">
+                                <path
+                                    d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap">Create Listing</span>
+                        </a>
+                    @endif
+
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-blue-500 group">
@@ -155,39 +150,35 @@
                             class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">3</span>
                     </a>
                 </li>
-                {{-- <li>
-                    <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-blue-500 group">
-                        <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 group-hover:text-teal-200"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 20 18">
-                            <path
-                                d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-                        </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
-                    </a>
-                </li> --}}
                 <li>
-                    <button type="button" class="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-blue-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                          <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
-                             <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
-                          </svg>
-                          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Admin Control </span>
-                          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                          </svg>
+                    <button type="button"
+                        class="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-blue-400 dark:text-white dark:hover:bg-gray-700"
+                        aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                        <svg class="flex-shrink-0 w-5 h-5 text-white transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 18 21">
+                            <path
+                                d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+                        </svg>
+                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Admin Control </span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
                     </button>
                     <ul id="dropdown-example" class="hidden py-2 space-y-2">
-                          <li>
-                             <a href="{{route('helpPage-createContent')}}" class="flex items-center w-full p-2 text-red-900  font-extrabold transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Create FAQ</a>
-                          </li>
-                          <li>
-                             <a href="#" class="flex items-center w-full p-2 text-blue-700 font-extrabold transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
-                          </li>
-                          <li>
-                             <a href="#" class="flex items-center w-full p-2 text-blue-700 font-extrabold transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
-                          </li>
+
+                        @if (auth()->user() && auth()->user()->hasRole('admin'))
+                            <li>
+                                <a href="{{ route('helpPage-createContent') }}"
+                                    class="flex items-center w-full p-2 text-red-900  font-extrabold transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Create
+                                    FAQ</a>
+                            </li>
+                        @endif
+
                     </ul>
-                 </li>
+                </li>
                 <li>
                     <a
                         href= "{{ route('show-application') }}"class="flex items-center p-2 text-white rounded-lg hover:bg-blue-500 group">
@@ -229,7 +220,8 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('sendEmail') }}"
+                    @if (auth()->user() && auth()->user()->hasRole('admin'))
+                     <a href="{{ route('sendEmail') }}"
                         class="flex items-center p-2 text-white rounded-lg hover:bg-blue-500 group">
                         <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -238,6 +230,9 @@
                         </svg>
                         <span class="ms-3">Send Email</span>
                     </a>
+                  
+                @endif
+                   
                 </li>
 
                 <li>
@@ -275,3 +270,46 @@
 </div>
 </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('logo-sidebar');
+        const mainContainer = document.querySelector('.main-container');
+        const dashboardContent = document.querySelector('.dashboard-content');
+        const footer = document.querySelector('footer');
+
+        function adjustLayoutForWindowSize() {
+            if (window.innerWidth >= 1025) {
+                sidebar.classList.add('sidebar-visible');
+                mainContainer.classList.add('expanded');
+                dashboardContent.style.left = '150px';
+                dashboardContent.style.right = '0px';
+
+
+            } else {
+                sidebar.classList.remove('sidebar-visible');
+                mainContainer.classList.remove('expanded');
+                dashboardContent.style.left = '0';
+                footer.style.height = '100px';
+            }
+        }
+
+        function adjustLogoSize() {
+            var logo = document.querySelector('.logo-text');
+            if (window.innerWidth < 768) {
+                logo.style.fontSize = '1.5rem'; // Medium screens
+            } else if (window.innerWidth < 480) {
+                logo.style.fontSize = '1.25rem'; // Smaller screens
+            } else {
+                logo.style.fontSize = '2.4rem'; // Large screens
+            }
+        }
+
+        adjustLayoutForWindowSize();
+        adjustLogoSize();
+
+        window.addEventListener('resize', function() {
+            adjustLayoutForWindowSize();
+            adjustLogoSize();
+        });
+    });
+</script>

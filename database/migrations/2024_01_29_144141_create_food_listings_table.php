@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('photo_url');
             $table->boolean('status')->default(true);
             $table->timestamps();
-
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade');
 

@@ -22,8 +22,6 @@ return new class extends Migration
 
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('address_id')->constrained('addresses')->onUpdate('cascade')->onDelete('cascade');
-
-            // $table->foreignId('email_notification_id')->constrained('email_notifications')->onUpdate('cascade')->onDelete('cascade'); 
       
         });
         

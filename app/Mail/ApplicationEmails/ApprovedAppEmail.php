@@ -2,7 +2,6 @@
 
 namespace App\Mail\ApplicationEmails;
 
-use App\Models\Application;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -10,6 +9,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * The ApprovedAppEmail class represents an email notification when an application is approved.
+ * It extends the Mailable class and implements ShouldQueue interface for queuing.
+ */
 class ApprovedAppEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
@@ -27,9 +30,9 @@ class ApprovedAppEmail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->from('share-me@app.com')
-                    ->to($this->details['email'])
-                    ->subject($this->details['subject'])
-                    ->markdown('emails.app-approved', ['details' => $this->details]);
+            ->to($this->details['email'])
+            ->subject($this->details['subject'])
+            ->markdown('emails.app-approved', ['details' => $this->details]);
     }
     /**
      * Get the message envelope.

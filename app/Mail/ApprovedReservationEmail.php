@@ -9,6 +9,10 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * The ApprovedReservationEmail class represents an email notification for approved reservations.
+ * It extends the Mailable class and implements ShouldQueue interface for queuing.
+ */
 class ApprovedReservationEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
@@ -20,11 +24,11 @@ class ApprovedReservationEmail extends Mailable implements ShouldQueue
      */
     public function __construct($details)
     {
-      $this->details=$details;
+        $this->details = $details;
     }
- 
 
-     /**
+
+    /**
      * Build the message.
      *
      * @return $this
@@ -32,9 +36,9 @@ class ApprovedReservationEmail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->from('share-me@app.com')
-                    ->to($this->details['email'])
-                    ->subject($this->details['subject'])
-                    ->markdown('emails.reservations-approved', ['details' => $this->details]);
+            ->to($this->details['email'])
+            ->subject($this->details['subject'])
+            ->markdown('emails.reservations-approved', ['details' => $this->details]);
     }
 
 

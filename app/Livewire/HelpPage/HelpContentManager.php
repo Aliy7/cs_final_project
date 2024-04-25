@@ -8,17 +8,29 @@ use Illuminate\Support\Facades\Auth;
 
 class HelpContentManager extends Component
 {
-    protected $title;
-    protected $content;
-    protected $category;
-    protected $helpContent;
+    public $title;
+    public $content;
+    public $category;
+    public $helpContent;
 
+    /**
+     * Render the component view.
+     * This function renders the component's view and applies the layout.
+     * 
+     * @return \Illuminate\View\View The view for managing help content.
+     */
     public function render()
     {
         return view('livewire.help-page.help-content-manager')
             ->layout('livewire.app.app-layout');
     }
 
+    /**
+     * Save new help content to the database.
+     * This function validates the input fields and saves new help content to the database.
+     * 
+     * @return void
+     */
     public function save()
     {
         $this->validate([
@@ -27,24 +39,32 @@ class HelpContentManager extends Component
             'category' => 'required|string|max:255',
         ]);
 
+        // Check if the user is authenticated.
         if (!Auth::check()) {
             return;
         }
+
+        // Create a new instance of HelpContent model and save it to the database.
         $helpContent = new HelpContent;
         $helpContent->title = $this->title;
         $helpContent->content = $this->content;
         $helpContent->category = $this->category;
-        $helpContent->user_id = Auth::id(); 
+        $helpContent->user_id = Auth::id();
         $helpContent->save();
 
         session()->flash('message', 'Help content added successfully.');
         $this->reset(['title', 'content', 'category']);
         $this->helpContent = HelpContent::all();
-
     }
 
-    public function mount(){
+    /**
+     * Initialize the component with initial data.
+     * This function initializes the component with the initial data.
+     * It retrieves all existing help content items from the database.
+     * @return void
+     */
+    public function mount()
+    {
         $this->helpContent = HelpContent::all();
     }
-  
 }
