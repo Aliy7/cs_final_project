@@ -6,7 +6,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 8h16M4 16h16" />
             </svg></button>
         <!-- Dropdown Menu -->
-
         <div id="dropdownMenu-{{ $foodListingId }}" style="display: none;"
             class="absolute right-0 mt-2 bg-blue-500 text-white font-bold py-1 px-1 overflow-hidden">
             <ul class="text-white-800">
@@ -21,7 +20,6 @@
             </ul>
         </div>
     </div>
-
     <!-- Edit Modal -->
     @if ($editModal)
         <div id="editModal" class="fixed inset-0  top-200 overflow-y-auto flex items-center justify-center z-10">

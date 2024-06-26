@@ -58,8 +58,8 @@ class RolePermissionSeeder extends Seeder
             ]
         );
         $modUser->assignRole('mod');
-    
-
+        
+        //creating normal user
         $normal = User::firstOrCreate(
             ['email' => 'aminah.alzahra@example.com'],
             [

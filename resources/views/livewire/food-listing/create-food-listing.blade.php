@@ -141,6 +141,20 @@
                 Listing</button>
         </div>
     </form>
+
+    <!-- Modal for Success Notification -->
+    <div id="successModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full flex justify-center items-center hidden">
+        <div class="bg-white p-4 rounded-lg shadow-lg">
+            <h3 class="text-lg font-bold">Success!</h3>
+            <p class="text-sm">The food listing has been successfully uploaded.</p>
+            <div class="mt-4 flex justify-end">
+                <button onclick="closeModal()"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <script>
     // Global timeout reference
@@ -212,11 +226,9 @@
             });
             suggestionsElement.appendChild(listItem);
         });
-
-        // Set a new timeout to hide suggestions after 5 seconds
         hideSuggestionsTimeout = setTimeout(() => {
             clearSuggestions(suggestionsId);
-        }, 5000);
+        }, 8000);
     }
 
     function clearSuggestions(suggestionsId) {
@@ -230,5 +242,19 @@
     function clearAllSuggestions() {
         ['name-suggestions', 'ingredients-suggestions', 'description-suggestions', 'allergen-suggestions'].forEach(
             clearSuggestions);
+    }
+
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('foodListingCreated', (event) => {
+            showModal();
+        });
+    });
+
+    function showModal() {
+        document.getElementById('successModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('successModal').classList.add('hidden');
     }
 </script>

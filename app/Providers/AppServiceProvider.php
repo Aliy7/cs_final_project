@@ -13,11 +13,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-
-        // $this->app->bindIf(GeocodingServiceInterfaces::class, function($app){
-        //     return new GeocodingService();
-
-        // });
       
     }
 

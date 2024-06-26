@@ -100,7 +100,6 @@
 </div>
 <script>
     function initialize() {
-        // This function will be called as the callback when the Google Maps API loads.
         initMap();
         loadGoogleMapsAPI();
     }
@@ -109,7 +108,6 @@
         document.querySelectorAll('[id^="map-"]').forEach(function(mapContainer) {
             const latitude = parseFloat(mapContainer.dataset.latitude);
             const longitude = parseFloat(mapContainer.dataset.longitude);
-            // Only initialize the map if latitude and longitude are available
             if (latitude && longitude) {
                 const map = new google.maps.Map(mapContainer, {
                     center: {

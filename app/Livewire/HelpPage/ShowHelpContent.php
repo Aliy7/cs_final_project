@@ -14,8 +14,6 @@ class ShowHelpContent extends Component
     public $editContent;
     public $editCategory;
     public $editId;
-
-
     /**
      * Mount the component and initialize properties.
      *

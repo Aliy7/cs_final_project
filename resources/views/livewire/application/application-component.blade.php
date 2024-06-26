@@ -1,7 +1,9 @@
 <div class="container mx-auto p-5 application-content">
-    <form wire:submit.prevent="submit" onsubmit="applicationSubmitted()" class="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-xl">
+    <form wire:submit.prevent="submit" onsubmit="applicationSubmitted()"
+        class="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-xl">
         <h2 class="text-2xl font-semibold text-center mb-6">Application Form</h2>
-        <div id="processing-message" class="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg shadow-md hidden" role="alert">
+        <div id="processing-message" class="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg shadow-md hidden"
+            role="alert">
             Processing your application... Please wait.
         </div>
         <!-- Family Income -->
@@ -89,32 +91,34 @@
             @enderror
         </div>
 
-        <div id="success-message" class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg shadow-md hidden" role="alert">
+        <div id="success-message" class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg shadow-md hidden"
+            role="alert">
             Your application has been successfully submitted! Now redirecting you to the dashboard...
         </div>
-        
+
         <div class="flex justify-end">
             <button type="submit" onclick="submissionMessage()"
                 class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                 Submit Application
             </button>
         </div>
-        <div id="success-message" class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg shadow-md hidden" role="alert">
+        <div id="success-message" class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg shadow-md hidden"
+            role="alert">
             Your application has been successfully submitted!
         </div>
     </form>
 </div>
 
 @if (session()->has('message'))
-<div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg shadow-md" role="alert">
-    {{ session('message') }}
-</div>
+    <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg shadow-md" role="alert">
+        {{ session('message') }}
+    </div>
 @endif
 
 @if (session()->has('error'))
-<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg shadow-md" role="alert">
-    {{ session('error') }}
-</div>
+    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg shadow-md" role="alert">
+        {{ session('error') }}
+    </div>
 @endif
 
 <script>
@@ -212,20 +216,8 @@
             document.getElementById('processing-message').classList.add('hidden');
             document.getElementById('success-message').classList.remove('hidden');
             setTimeout(() => {
-                window.location.href = '/dashboard'; 
+                window.location.href = '/dashboard';
             }, 5000);
-        }, 2000); 
+        }, 2000);
     }
-//     function applicationSubmitted() {
-//     // Show the processing message when the form is submitted
-//     document.getElementById('processing-message').classList.remove('hidden');
-
-//     // Simulate backend processing time with a delay, then show success message
-//     setTimeout(() => {
-//         // Hide the processing message and show the success message
-//         document.getElementById('processing-message').classList.add('hidden');
-//         document.getElementById('success-message').classList.remove('hidden');
-//     }, 2000); // Simulated backend processing time
-// }
-
 </script>

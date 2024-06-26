@@ -6,6 +6,14 @@ use Livewire\Component;
 use App\Models\HelpContent;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Manages help content for the application, facilitating the creation, viewing, and updating of help articles.
+ * 
+ * This Livewire component handles validation and storage of help content in the database, ensuring operations
+ * It provides a dynamic and responsive interface for managing help articles,
+ * including immediate feedback on user interactions.
+ */
+
 class HelpContentManager extends Component
 {
     public $title;

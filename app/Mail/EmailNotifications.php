@@ -64,7 +64,7 @@ class EmailNotifications extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        $email = $this->from('hello@example.com', config('app.name'))
+        $email = $this->from('shareme@app.com', config('app.name'))
             ->subject($this->mailNotification->title)
             ->view('livewire.email.email-component', ['mailNotification' => $this->mailNotification]);
 

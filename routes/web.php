@@ -58,9 +58,6 @@ Route::get('/dashboard', Dashboard::class)
 
 Route::get('/send-email', EmailSender::class)->middleware(['auth'])->name('sendEmail');
 
-
-
-
 Route::get('/foodlisting', CreateFoodListing::class)
     ->middleware(['auth']) 
     ->name('foodlisting');
@@ -82,8 +79,6 @@ Route::get('/showFoodListing', ShowFoodListing::class)
         Route::get('/show-profile/{profileId}', ShowProfile::class)->name('profile.showProfile');
 
     });
-
-    
 
 Route::get('/google-map', function () {
     return view('googlemaps');
@@ -116,11 +111,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-
-
-
 Route::get('/contact-email', ContactForm::class)->name('contactUs-email');
-
 
 //help page Route
 Route::get('/help-page/create-content', HelpContentManager::class)->name('helpPage-createContent');

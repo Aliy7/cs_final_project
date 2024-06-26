@@ -14,9 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     @livewireStyles
-
 
 <body class="flex flex-col min-h-screen">
     <section class="mb-40">
@@ -190,7 +188,6 @@
         </div>
     </footer>
     <script>
-        // Set the current year in the footer
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 

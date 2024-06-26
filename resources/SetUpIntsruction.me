@@ -1,0 +1,50 @@
+# Laravel Application Setup Guide 
+
+## System Requirements
+
+* PHP >= 7.3
+* Composer (https://getcomposer.org/) 
+* Node.js and npm (https://nodejs.org/)
+* MySQL or Heide database
+
+## Installation (using Laragon)
+Install largaon: https://laragon.org/docs/install.html
+Read docs : https://laragon.org/docs/install.html for detailed infomation
+Alternatively watch this video: https://www.youtube.com/watch?v=n2hmnTMZiwg&t=768s
+
+1. Place Project:
+   * Place project folder into Laragon's `www` directory (e.g., `C:\laragon\www\your-project-directory`).
+
+2. Start Services:
+    * Open Laragon and start the Apache and MySQL services.
+
+3. Install Dependencies (Open terminal in your project directory):**
+    Composer: `composer install`
+    NPM: `npm install` 
+
+4. Environment File:
+    Copy `.env.example` to `.env`.
+    Edit `.env`: set database details and other configurations.
+
+5. Application Key:
+   `php artisan key:generate`
+6. Set database 
+      'Update .env file with credential
+
+7. Migrations & Seeding:
+    `php artisan migrate:fresh --seed`
+
+## Running the Application
+
+1. Start Server:
+    `php artisan serve` (Access at http://localhost:8000)
+
+2. Compile Assets:
+   Development: `npm run dev`
+   Production:  `npm run production`
+
+## Additional Commands
+
+Clear Cache: `php artisan cache:clear`
+Optimize: `php artisan optimize`
+sending emails : `php artisan queue:work`

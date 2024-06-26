@@ -41,14 +41,14 @@ class UserRegEmail extends Mailable implements ShouldQueue
 
     public function build()
     {
-        $mail = $this->from('share-me@app.com', 'YourAppName')
+        $mail = $this->from('share-me@app.com', ' food sharing web app')
                      ->to($this->user->email)
-                     ->subject('Welcome to YourAppName!')
+                     ->subject('Welcome to  food sharing web app!')
                      ->markdown('emails.user-registration-mail', ['user' => $this->user]);
     
         $notification = new EmailNotification;
         $notification->user_id = $this->user->id;
-        $notification->subject = 'Welcome to YourAppName!';
+        $notification->subject = 'Welcome to food sharing web app!';
         $notification->email_body = 'Thank you for registering with us. We\'re excited to have you on board!';
         $notification->is_read = false; 
         $notification->save();

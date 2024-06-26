@@ -8,7 +8,7 @@ use Livewire\Attributes\On;
 class AppLayout extends Component
 {
 
-    // protected $listeners = ['setLocationCoordinates'];
+    protected $listeners = ['showApplication' => '$showApplication'];
 
     #[on('showFoodListing')]
     public function updateFoodList($foodListing = null){

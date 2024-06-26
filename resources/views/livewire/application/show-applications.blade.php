@@ -46,10 +46,7 @@
                         </tr>
                     @endforeach
                 </tbody>
-
-
             </table>
-            
         </div>
     </div>
 </section>
@@ -68,7 +65,6 @@
                 applicationDisplay.style.left = '240px';
             } else {
                 sidebar.classList.remove('sidebar-visible');
-                // Reset the layout
                 mainContainer.style.marginLeft = '0';
                 footer.style.marginLeft = '0';
                 applicationDisplay.style.left = '0';

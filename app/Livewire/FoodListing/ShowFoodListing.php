@@ -27,7 +27,8 @@ class ShowFoodListing extends Component
         'redirectToApplicationForm' => 'handleRedirect',
         'foodListingDeleted' => '$FoodDeleted',
         'FoodListingIsDeleted' => '$FoodListingIsDeleted',
-        'foodListingIsEdited' => '$foodListingIsEdited'
+        'foodListingIsEdited' => '$foodListingIsEdited',
+        'applicationSubmitted' => '$applicationSubmitted',
 
     ];
 
@@ -66,6 +67,8 @@ class ShowFoodListing extends Component
         return $foodlistings = FoodListing::with('user')
             ->orderBy('created_at', 'desc')
             ->paginate(4);
+
+        $this->dispatch('showApplication');
     }
 
     /**

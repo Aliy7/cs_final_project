@@ -112,9 +112,6 @@ class CreateFoodListing extends Component
         }
         $foodListing = new FoodListing();
 
-
-        // Create instance of new food listing 
-
         DB::transaction(function () use ($foodListing) {
             $foodListing->name = $this->name;
             $foodListing->ingredients = $this->ingredients;
@@ -139,14 +136,13 @@ class CreateFoodListing extends Component
 
             // Submit location coordinates
             $this->submitLocation($foodListing->id, $this->latitude, $this->longitude, $this->searchName);
-
-
-            $this->sendFoodListingCreatedEmail($foodListing);
+            $this->emailNotification($foodListing);
         });
 
-        $this->reset('name', 'ingredients', 'quantity', 'allergen', 'description', 'status', 'category_id', 'images', 'latitude', 'longitude', 'searchName');
-        $this->dispatch('foodListingCreated');
+        $this->reset('name', 'ingredients', 'quantity', 'allergen', 'description', 
+        'status', 'category_id', 'images', 'latitude', 'longitude', 'searchName');
         session()->flash('success', 'Food listing created successfully.');
+        $this->dispatch('foodListingCreated');
     }
 
     protected function submitLocation($foodListingId, $latitude, $longitude, $searchName = null)
@@ -191,9 +187,19 @@ class CreateFoodListing extends Component
     }
 
 
-    public function sendFoodListingCreatedEmail($foodListing)
+    /**
+     * Dispatches email notifications to users eligible to receive information about a newly created food listing.
+     *
+     * Initially, this method identifies the list of eligible users by utilising the eligibility method,
+     * which filters users based on their application status and the availability of the food.
+     * If no users qualify, the method logs this event and terminates early to prevent unnecessary processing.
+     * For each eligible user, an email is meticulously crafted and queued for dispatch. The email includes personalised details such as the user's name
+     * and a link to view the listing. Should there be a failure in the email dispatch process, an error is logged for future troubleshooting.
+     * Notifications that are successfully sent are then recorded in the database, documenting details about the recipient and the specific listing,
+     * thereby ensuring traceability and facilitating future analyses of user engagement.
+     */
+    public function emailNotification($foodListing)
     {
-        // Fetch eligible users based on the quantity of food available
         $eligibleUsers = $this->eligibility($foodListing->quantity);
 
         if ($eligibleUsers->isEmpty()) {
@@ -220,7 +226,6 @@ class CreateFoodListing extends Component
                 \Log::error("Failed to send email to {$user->email}: {$e->getMessage()}");
                 continue;
             }
-            // Save the email notification to the database
             $notification = new EmailNotification();
             $notification->user_id = $user->id;
             $notification->food_listing_id = $foodListing->id;
@@ -234,208 +239,50 @@ class CreateFoodListing extends Component
     /**
      * Retrieve a list of eligible users based on their application approval status and family income.
      * 
-     * This function fetches users whose applications have been approved and sorts them by their family income in ascending order.
-     * It limits the results to the specified quantity, which is useful for allocating limited resources like food.
-     * 
-     * @param int $quantity The maximum number of users to retrieve.
-     * @return \Illuminate\Database\Eloquent\Collection A collection of user models that match the criteria.
+     * This function queries users whose applications have been approved, sorting them by their family income in ascending order.
+     * It handles users with the same family income by shuffling them to ensure a fair distribution when selecting the final list.
+     * The results are limited to the specified quantity, making this suitable for situations where resource allocation is constrained.
+     * @param int $quantity The maximum number of users to retrieve, useful for controlling resource allocation limits.
+     * @return \Illuminate\Database\Eloquent\Collection A collection of user models that meet the criteria, ensuring fairness in selection.
      */
-    // public function eligiblity($quantity)
-    // {
-    //     // Fetch users with approved applications, ordered by their family income
-    //     $users = User::query()
-    //         ->select('users.*')
-    //         ->join('applications', 'applications.user_id', '=', 'users.id') // Ensuring we join with applications
-    //         ->where('applications.status', '=', 'approved')  // Only include users with approved applications
-    //         ->orderBy('applications.family_income', 'asc')  // Order by ascending family income
-    //         ->take($quantity)  // Limit the number of users based on the available quantity of food
-    //         ->get();
+    public function eligibility($quantity)
+    {
+        // fetch user's who has applicatiob by their family_income and application status approved
+        $users = User::select('users.id', 'users.email', 'users.first_name', 'applications.family_income')
+            ->join('applications', 'users.id', '=', 'applications.user_id')
+            ->where('applications.status', '=', 'approved')
+            ->orderBy('applications.family_income', 'asc')
+            ->distinct()
+            ->take($quantity)
+            ->with('application')
+            ->get();
 
-    //     return $users;
-    // }
+        $income = null;
+        $equalIncome = collect();
+        $eligbleUser = collect();
 
-    
-
-// public function eligibility($quantity)
-// {
-//     // Fetch users whose applications are approved, sorted by the family income of the application.
-//     $usersWithApprovedApplications = User::whereHas('application', function ($query) {
-//         $query->where('status', 'approved');  // Ensure the application is approved
-//     })->with(['application' => function ($query) {
-//         $query->where('status', 'approved')->orderBy('family_income', 'asc');  // Load the approved application sorted by income
-//     }])->get();
-
-//     // Prepare the collection to store eligible users, ensuring uniqueness by user_id
-//     $eligibleUsers = collect();
-//     $processedUserIds = [];
-
-//     // Iterate through the users to select those with the lowest family incomes first
-//     foreach ($usersWithApprovedApplications as $user) {
-//         if (!in_array($user->id, $processedUserIds) && $eligibleUsers->count() < $quantity) {
-//             $eligibleUsers->push($user);
-//             $processedUserIds[] = $user->id;  // Track the user ID to prevent duplicate entries
-//         }
-//     }
-
-//     // Handle the scenario where multiple users have the same family income
-//     $groupedByIncome = $eligibleUsers->groupBy(function ($user) {
-//         return $user->application->family_income;
-//     });
-
-//     $finalEligibleUsers = collect();
-//     foreach ($groupedByIncome as $income => $users) {
-//         if ($users->count() > 1) {
-//             // Randomize users with the same income level
-//             $finalEligibleUsers = $finalEligibleUsers->merge($users->shuffle());
-//         } else {
-//             $finalEligibleUsers = $finalEligibleUsers->merge($users);
-//         }
-//     }
-
-//     // Return the final set of users, ensuring the collection size does not exceed the available quantity of food
-//     return $finalEligibleUsers->take($quantity);
-// }
-
-//works for approved users
-
-// public function eligibility($quantity)
-// {
-//     // Fetch users with approved applications, directly joining and ordering by family income
-//     $users = User::select('users.*')
-//                  ->join('applications', 'users.id', '=', 'applications.user_id')
-//                  ->where('applications.status', 'approved')
-//                  ->orderBy('applications.family_income', 'asc')
-//                  ->with('application')
-//                  ->get();
-
-//     $eligibleUsers = collect();
-//     $processedUserIds = [];
-
-//     // Filter unique users up to the specified quantity
-//     foreach ($users as $user) {
-//         if (!in_array($user->id, $processedUserIds) && $eligibleUsers->count() < $quantity) {
-//             $eligibleUsers->push($user);
-//             $processedUserIds[] = $user->id;  // Ensure each user is only processed once
-//         }
-//     }
-
-//     // If needed, shuffle users with the same family income
-//     // This creates a fair chance for users with the same financial condition
-//     $finalEligibleUsers = collect();
-//     $lastIncome = null;
-//     $sameIncomeUsers = collect();
-
-//     foreach ($eligibleUsers as $user) {
-//         if ($lastIncome === $user->application->family_income) {
-//             $sameIncomeUsers->push($user);
-//         } else {
-//             if (!$sameIncomeUsers->isEmpty()) {
-//                 $finalEligibleUsers = $finalEligibleUsers->merge($sameIncomeUsers->shuffle());
-//                 $sameIncomeUsers = collect([$user]);
-//             } else {
-//                 $finalEligibleUsers->push($user);
-//             }
-//             $lastIncome = $user->application->family_income;
-//         }
-//     }
-
-//     if (!$sameIncomeUsers->isEmpty()) {
-//         $finalEligibleUsers = $finalEligibleUsers->merge($sameIncomeUsers->shuffle());
-//     }
-
-//     return $finalEligibleUsers->take($quantity);
-// }
-
-//works for income 
-// public function eligibility($quantity)
-// {
-//     // Fetch users with approved applications, directly joining and ordering by family income
-//     $users = User::select('users.*')
-//                  ->join('applications', 'users.id', '=', 'applications.user_id')
-//                  ->where('applications.status', 'approved')
-//                  ->orderBy('applications.family_income', 'asc')
-//                  ->with('application')
-//                  ->get();
-
-//     $eligibleUsers = collect();
-//     $processedUserIds = [];
-
-//     // Filter unique users up to the specified quantity
-//     foreach ($users as $user) {
-//         if (!in_array($user->id, $processedUserIds) && $eligibleUsers->count() < $quantity) {
-//             $eligibleUsers->push($user);
-//             $processedUserIds[] = $user->id;  // Ensure each user is only processed once
-//         }
-//     }
-
-//     // If needed, shuffle users with the same family income
-//     // This creates a fair chance for users with the same financial condition
-//     $finalEligibleUsers = collect();
-//     $lastIncome = null;
-//     $sameIncomeUsers = collect();
-
-//     foreach ($eligibleUsers as $user) {
-//         if ($lastIncome === $user->application->family_income) {
-//             $sameIncomeUsers->push($user);
-//         } else {
-//             if (!$sameIncomeUsers->isEmpty()) {
-//                 $finalEligibleUsers = $finalEligibleUsers->merge($sameIncomeUsers->shuffle());
-//                 $sameIncomeUsers = collect([$user]);
-//             } else {
-//                 $finalEligibleUsers->push($user);
-//             }
-//             $lastIncome = $user->application->family_income;
-//         }
-//     }
-
-//     if (!$sameIncomeUsers->isEmpty()) {
-//         $finalEligibleUsers = $finalEligibleUsers->merge($sameIncomeUsers->shuffle());
-//     }
-
-//     return $finalEligibleUsers->take($quantity);
-// }
-
-public function eligibility($quantity)
-{
-    // Directly fetch users with approved applications, ensuring we sort by family income.
-    $users = User::select('users.id', 'users.email', 'applications.family_income')
-                 ->join('applications', 'users.id', '=', 'applications.user_id')
-                 ->where('applications.status', '=', 'approved')
-                 ->orderBy('applications.family_income', 'asc')
-                 ->distinct()
-                 ->take($quantity)
-                 ->with('application')
-                 ->get();
-
-    // Prepare to handle users with the same family income
-    $lastIncome = null;
-    $usersWithSameIncome = collect();
-    $finalEligibleUsers = collect();
-
-    // Iterate through the users and handle same income scenarios
-    foreach ($users as $user) {
-        if ($lastIncome === $user->application->family_income) {
-            $usersWithSameIncome->push($user);
-        } else {
-            if (!$usersWithSameIncome->isEmpty()) {
-                // Shuffle to ensure fairness among same income level users
-                $finalEligibleUsers = $finalEligibleUsers->merge($usersWithSameIncome->shuffle());
-                $usersWithSameIncome = collect([$user]);
+        // Handle users with the same family income
+        foreach ($users as $user) {
+            if ($income === $user->application->family_income) {
+                $equalIncome->push($user);
             } else {
-                $finalEligibleUsers->push($user);
+                if (!$equalIncome->isEmpty()) {
+                    $eligbleUser = $eligbleUser->merge($equalIncome->shuffle());
+                    $equalIncome = collect([$user]);
+                } else {
+                    $eligbleUser->push($user);
+                }
+                $income = $user->application->family_income;
             }
-            $lastIncome = $user->application->family_income;
         }
-    }
 
-    // Shuffle the last income group if necessary
-    if (!$usersWithSameIncome->isEmpty()) {
-        $finalEligibleUsers = $finalEligibleUsers->merge($usersWithSameIncome->shuffle());
-    }
+        if (!$equalIncome->isEmpty()) {
+            $eligbleUser = $eligbleUser->merge($equalIncome->shuffle());
+        }
 
-    // Return the final collection of eligible users, limited to the quantity specified
-    return $finalEligibleUsers->take($quantity);
-}
+        //make sure quantity is equal to email nottification
+        return $eligbleUser->take($quantity);
+    }
 
     /**
      * Update the value of a specific input field.
@@ -459,3 +306,5 @@ public function eligibility($quantity)
         }
     }
 }
+
+//Reference https://larapeak.medium.com/upload-files-and-photos-with-laravel-livewire-959a04e8258a

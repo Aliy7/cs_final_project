@@ -5,7 +5,6 @@ namespace App\Livewire\Profile;
 use App\Models\Profile;
 use Livewire\Component;
 
-
 /**
  * The ShowProfile class displays the details of a user's profile.
  * It retrieves and renders the profile information for a specific user.

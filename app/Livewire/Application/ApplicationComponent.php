@@ -84,14 +84,11 @@ class ApplicationComponent extends Component
      * Handles the form submission:
      *  Validates the form input data.
      *  Checks if the user has already submitted an application.
-     *  Ensures that only students can submit applications.
-     *  Creates a new address record based on the input data.
      *  Creates a new application record with the user's input data.
      *  Automatically approves the application if the family income is less than or equal to 21000.
      *  Sends the application for admin approval if the family income is greater than 21000.
      *  Redirects the user to the appropriate dashboard page based on the outcome.
      */
-
     public function submit()
     {
         $this->validate();
@@ -136,13 +133,11 @@ class ApplicationComponent extends Component
             return redirect()->to('/dashboard');
         } else if ($this->family_income > 21000) {
             $application->status = 'pending';
-
             $this->submittedNotification($application);
             $application->save();
-
-            // session()->flash('message', 'Your application has been submitted and is currently pending approval. Please wait for further instructions.');
-            // return redirect()->to('/dashboard');
+           
         }
+        $this->dispatch('applicationSubmitted');
     }
 
     /**

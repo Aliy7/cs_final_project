@@ -111,7 +111,7 @@ class Reservations extends Component
     }
 
     /**
-     * Process the reservation transaction.
+     * Process the reservation's transaction.
      *
      * This function handles the transaction for making a reservation.
      * It checks for existing reservations and available quantity of the food listing.
