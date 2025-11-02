@@ -1,66 +1,175 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+#
+# FOOD SHARING WEB APPLICATION (FINAL YEAR PROJECT – BSc COMPUTER SCIENCE)
+#
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Framework:** Laravel 10 (PHP 8)  
+**Language:** PHP, Blade (HTML/CSS/JS)  
+**Database:** MySQL  
+**Category:** Full-Stack Web Development Project  
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 1. PROJECT DESCRIPTION
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* This project is a **community-oriented food sharing web application** developed as part of a final-year BSc Computer Science project.  
+* The system is designed to help individuals and local businesses reduce food waste by enabling users to **share surplus food** with others in their community.  
+* Registered users can create, update, and delete food listings, while others can browse, reserve, and collect available items.  
+* The application provides **secure authentication, CRUD operations, email notifications, and an admin dashboard** for platform moderation.  
+* Developed using **Laravel’s MVC framework**, it integrates a **relational database (MySQL)** and **Blade templates** for dynamic content rendering.  
+* The design emphasizes sustainability, scalability, and accessibility through a fully responsive interface.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 2. FEATURES
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* User registration, login, and authentication (Laravel Breeze / Sanctum)  
+* Create, edit, and delete food listings  
+* Upload and manage food images  
+* Reservation and confirmation workflow  
+* Automated email notifications for reservations  
+* Admin dashboard for managing listings and users  
+* Category and location-based search and filtering  
+* Responsive front-end built with Bootstrap 5  
+* Database migration and seeding support  
+* Unit and feature tests using PHPUnit  
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 3. FILE STRUCTURE
 
-## Laravel Sponsors
+```
+app/               → Controllers, Models, Middleware, and business logic
+bootstrap/         → Application bootstrapping files
+config/            → Configuration files (app, mail, database)
+database/          → Migrations and Seeders
+public/            → Public assets (CSS, JS, images)
+resources/         → Blade templates and front-end views
+routes/            → Web and API route definitions
+storage/           → Uploaded images, logs, and cache
+tests/             → Unit and feature tests
+.env.example       → Example environment configuration
+composer.json      → PHP dependencies
+artisan            → Laravel CLI tool
+README.md          → Project documentation
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 4. SETUP AND INSTALLATION
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+1. **Clone the repository:**
 
-## Contributing
+   ```bash
+   git clone https://github.com/yourusername/food-sharing-app.git
+   cd food-sharing-app
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Install dependencies:**
 
-## Code of Conduct
+   ```bash
+   composer install
+   npm install && npm run dev
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. **Configure the environment:**
 
-## Security Vulnerabilities
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   Then update the `.env` file with your **database** and **mail** credentials.
 
-## License
+4. **Run database migrations and seeders:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   ```bash
+   php artisan migrate --seed
+   ```
+
+5. **Start the local development server:**
+
+   ```bash
+   php artisan serve
+   ```
+
+   Access the application at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+---
+
+## 5. USAGE GUIDE
+
+### 🧑‍🍳 Register and Login
+Create an account and sign in to access the user dashboard.
+
+### 🍲 Create a Food Listing
+Submit available food with title, description, expiry date, and optional image.
+
+### 📩 Make a Reservation
+Browse available listings and reserve an item for collection.  
+Both donor and receiver receive confirmation via email.
+
+### 🧾 Manage Listings
+Users can update or delete their listings anytime from their dashboard.
+
+### 🛡️ Admin Dashboard
+Admins can view all users, monitor listings, and approve or remove inappropriate content.
+
+---
+
+## 6. EMAIL NOTIFICATIONS
+
+The application uses Laravel’s built-in `Mail` functionality.  
+Configure SMTP credentials in `.env`:
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_username
+MAIL_PASSWORD=your_password
+MAIL_ENCRYPTION=tls
+```
+
+Emails are triggered automatically when reservations are made or confirmed.
+
+---
+
+## 7. TESTING
+
+To execute automated tests, run:
+
+```bash
+php artisan test
+```
+
+Expected result:
+
+```
+All tests passed (✔)
+```
+
+The testing suite includes:  
+* Authentication and user registration tests  
+* Food listing creation and deletion tests  
+* Reservation workflow verification  
+* Email dispatch validation  
+
+---
+
+## 8. FUTURE ENHANCEMENTS
+
+* Integration with Google Maps API for location-based listing display  
+* User profile pictures and reputation system  
+* Real-time notifications using Laravel Echo or Pusher  
+* Multi-language support for broader accessibility  
+* Deployment to Vercel, Render, or DigitalOcean for public access  
+
+---
+
+## 9. CONCLUSION
+
+The **Food Sharing Web Application** demonstrates robust use of the Laravel framework to create a socially impactful platform.  
+It successfully integrates authentication, CRUD operations, and automated notifications while maintaining clean architecture and scalability.  
+The project aligns with sustainable development goals by addressing food waste and community engagement through modern web technologies.
+
+**----End----**
