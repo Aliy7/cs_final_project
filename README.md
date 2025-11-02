@@ -60,7 +60,7 @@ README.md          → Project documentation
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/food-sharing-app.git
+   git clone https://github.com/Aliy7/food-sharing-app.git
    cd food-sharing-app
    ```
 
