@@ -2,10 +2,10 @@
 # FOOD SHARING WEB APPLICATION (FINAL YEAR PROJECT – BSc COMPUTER SCIENCE)
 #
 
-**Framework:** Laravel 10 (PHP 8)  
+**Framework:** Laravel 10 (PHP 8)
 **Language:** PHP, Blade (HTML/CSS/JS)  
 **Database:** MySQL  
-**Category:** Full-Stack Web Development Project  
+**Category:** Full-Stack Web Application Project  
 
 ---
 
@@ -92,26 +92,26 @@ README.md          → Project documentation
    php artisan serve
    ```
 
-   Access the application at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+   Access the application at: https://foodsharing.io
 
 ---
 
 ## 5. USAGE GUIDE
 
-### 🧑‍🍳 Register and Login
+### Register and Login
 Create an account and sign in to access the user dashboard.
 
-### 🍲 Create a Food Listing
+### Create a Food Listing
 Submit available food with title, description, expiry date, and optional image.
 
-### 📩 Make a Reservation
+### Make a Reservation
 Browse available listings and reserve an item for collection.  
 Both donor and receiver receive confirmation via email.
 
-### 🧾 Manage Listings
+### Manage Listings
 Users can update or delete their listings anytime from their dashboard.
 
-### 🛡️ Admin Dashboard
+### Admin Dashboard
 Admins can view all users, monitor listings, and approve or remove inappropriate content.
 
 ---
@@ -156,17 +156,7 @@ The testing suite includes:
 
 ---
 
-## 8. FUTURE ENHANCEMENTS
-
-* Integration with Google Maps API for location-based listing display  
-* User profile pictures and reputation system  
-* Real-time notifications using Laravel Echo or Pusher  
-* Multi-language support for broader accessibility  
-* Deployment to Vercel, Render, or DigitalOcean for public access  
-
----
-
-## 9. CONCLUSION
+## 8. CONCLUSION
 
 The **Food Sharing Web Application** demonstrates robust use of the Laravel framework to create a socially impactful platform.  
 It successfully integrates authentication, CRUD operations, and automated notifications while maintaining clean architecture and scalability.  
